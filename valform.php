@@ -24,8 +24,11 @@ $datetime = new DateTime();
 
 
 $line= json_encode(array('ip' => $ip)) . ' '. date('Y-m-d h:i:s') . ' ' . $datetime->format('U') . ' ' . $_POST['resolution']  . ' ' .$_POST['slider'] . ' ' .$_POST['slider1'] . ' ' .$_POST['slider2'] . ' ' .$_POST['slider3'] . ' ' .$_POST['slider4'];
-
+//echo $line; //
+include ("bdconn.php");
+//exit();
 ?>
+
 <!DOCTYPE html>
 <html>
   <head>
