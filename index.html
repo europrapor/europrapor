@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>europrapor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+</head>
+
+<body>
+<div data-role="page">
+ <div data-role="header">  <h1>europrapor</h1></div>
+ <div data-role="content">
+
+ 
+ <div>
+<div>
+
+
+<button onclick="getLocation()">Acceptez vous de partager votre position de drapeau ? </button>
+<div>
+<p id="demo">Latitude: <br>Longitude: </p>
+</div>
+
+<script>
+var x=document.getElementById("demo");
+function getLocation()
+  {
+  if (navigator.geolocation)
+    {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  else{x.innerHTML="Geolocation is not supported by this browser.";}
+  }
+function showPosition(position)
+  {
+  x.innerHTML="Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;	
+  }
+</script>
+
+
+
+ <div data-role="content">
+    <form method="post" action="valform.php">
+	
+		<input type="hidden" name="lpocatio" value="English">
+		<label for="slider">Privacy level:</label>
+		 <div data-role="fieldcontain">
+			
+			<input type="range" name="slider" id="slider-0" value="25" min="0" max="100">
+		</div>
+	  
+	
+	<label for="slider1">Anxiety</label>
+		<div data-role="fieldcontain">
+		
+		<input type="range" name="slider1" id="slider-1" value="25" min="0" max="100" />
+</div>
+		<label for="slider2">Joy</label>
+		<div data-role="fieldcontain">
+		
+		<input type="range" name="slider2" id="slider-2" value="25" min="0" max="100" />
+</div>
+<label for="slider3">Anxiety</label>
+		<div data-role="fieldcontain">
+		
+		<input type="range" name="slider3" id="slider-3" value="25" min="0" max="100" />
+</div>
+	<label for="slider4">Motivation:</label>
+		<div data-role="fieldcontain">
+	
+		<input type="range" name="slider4" id="slider-4" value="25" min="0" max="100" />
+</div>
+
+		<input type="submit" data-inline="true" value="Submit">
+
+	</form>
+  </div>
+  
+  
+
+
+ 
+ 
+ 
+ </div><!-- /content --> 
+<div data-role="footer">
+	<h4>Euromaidan open services </h4>
+</div><!-- /footer -->
+ 
+  
+
+  </div><!-- /page -->
+	</body>
+</html>
