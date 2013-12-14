@@ -97,7 +97,7 @@ $line= json_encode(array('ip' => $ip)) . ' '. date('Y-m-d h:i:s') . ' ' . $datet
  
 	    	var myOptions = {
 				panControl: false,
-				zoomControl: false,
+				zoomControl: true,
 				mapTypeControl: false,
 				scaleControl: false,
 				streetViewControl: false,
@@ -105,9 +105,9 @@ $line= json_encode(array('ip' => $ip)) . ' '. date('Y-m-d h:i:s') . ' ' . $datet
 				draggable: true,
 				disableDoubleClickZoom: true,     //disable zooming
 				scrollwheel: false,
-	      		zoom: 20,
+	      		zoom: 12,
 	      		center: latLng,
-	      		mapTypeId: google.maps.MapTypeId.HYBRID //   ROADMAP; SATELLITE; HYBRID; TERRAIN;
+	      		mapTypeId: google.maps.MapTypeId.ROADMAP //   ROADMAP; SATELLITE; HYBRID; TERRAIN;
 			};
  
 			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -129,7 +129,7 @@ $line= json_encode(array('ip' => $ip)) . ' '. date('Y-m-d h:i:s') . ' ' . $datet
  
 			var marker = new google.maps.Marker({
 			    position: markerlatlng,
-			    title:"Hello World!"
+			    title:"my dominant emotion is Joy :)"
 			});
  
 			marker.setMap(map);
@@ -139,7 +139,7 @@ $line= json_encode(array('ip' => $ip)) . ' '. date('Y-m-d h:i:s') . ' ' . $datet
 			*/
  
 			myInfoWindowOptions = {
-				content: '<div class="info-window-content"><h4>Hello! I am a Google Map custom marker</h4></div>',
+				content: '<div class="info-window-content"><h4>my dominant emotion is Joy</h4></div>',
 				maxWidth: 275
 			};
  
