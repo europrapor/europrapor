@@ -24,7 +24,7 @@ $(document).bind("mobileinit", function(){
  <div data-role="header">  <h1>Europrapor</h1></div>
  <div data-role="content">
 
-<button onclick="getLocation()">If you agree to share your broad locatio, please click here </button>
+<button onclick="getLocation()">If you agree to share your broad location, please click here </button>
 
 <a id='myField'></a>
 
