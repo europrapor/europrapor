@@ -45,9 +45,10 @@ var lat = position.coords.latitude;
   var lon = position.coords.longitude;
    
    //document.location = "test1.php?lat=" + lat + "&lon=" +  lon;
-    
-	x.innerHTML= "lat=" + lat + "&lon=" +  lon;
-	document.getElementById('resolution').value= "lat=" + lat + "&lon=" +  lon;
+    var lats =  lat.toPrecision(5);
+	var longs =  lon.toPrecision(5);
+	//x.innerHTML= "lat=" + lats + "&lon=" +  longs;
+	document.getElementById('resolution').value= "lat=" + lats + "&lon=" +  longs;
 }
 </script>
  

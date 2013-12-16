@@ -21,7 +21,9 @@
 		
 		map.addLayer(layer = new OpenLayers.Layer.Stamen("toner"));
 		//map.addLayer(new OpenLayers.Layer.OSM());
-
+      map.getNumZoomLevels = function(){
+        return 14;
+        };
 		var zoom = 4;
 		   
 		var defStyle = { pointRadius: "22",fillColor: "#fff000", strokeOpacity: "0.7", strokeWidth: 0, fillOpacity: 0.7};
