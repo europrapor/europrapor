@@ -2,46 +2,96 @@ FORMAT: 1A
 HOST: http://www.google.com
 
 # Europrapor API
-Notes API is a *short texts saving* service similar to its physical paper presence on your table.
+Europrapor API is a RESTful web service used to collect anonymous geodata for creating heat maps based on peoples mental state during Euromaidan demonstrations in Ukraine, which began on the night of 21 November 2013 with very large public protests demanding closer European integration.
 
-# Group Notes
-Notes related resources of the **Notes API**
+# Maps
+Geodata related resources
 
-## Notes Collection [/notes]
-### List all Notes [GET]
+## Position data [/map]
+### List of all check-ins [GET]
 + Response 200 (application/json)
 
-        [{
-          "id": 1, "title": "Jogging in park"
-        }, {
-          "id": 2, "title": "Pick-up posters from post-office"
-        }]
+        [
+            {
+                "id": 1,
+                "position": {
+                    "lt": 35.45645,
+                    "lg": 67.987986
+                }
+            },
+            {
+                "id": 2,
+                "position": {
+                    "lt": 35.45645,
+                    "lg": 67.987986
+                }
+            }
+        ]
 
-### Create a Note [POST]
-+ Request (application/json)
+## Joy map [/map/joy]
+Joy level data
 
-        { "title": "Buy cheese and bread for breakfast." }
-
-+ Response 201 (application/json)
-
-        { "id": 3, "title": "Buy cheese and bread for breakfast." }
-
-## Note [/notes/{id}]
-A single Note object with all its details
-
-+ Parameters
-    + id (required, number, `1`) ... Numeric `id` of the Note to perform action with. Has example value.
-
-### Retrieve a Note [GET]
+### Retrieve joy level heat map data [GET]
 + Response 200 (application/json)
 
-    + Header
+        [
+            {
+                "id": 1,
+                "heat": 1
+            },
+            {
+                "id": 2,
+                "heat": 5
+            }
+        ]
 
-            X-My-Header: The Value
+## Fear map [/map/fear]
+Fear level data
 
-    + Body
+### Retrieve fear level heat map data [GET]
++ Response 200 (application/json)
 
-            { "id": 2, "title": "Pick-up posters from post-office" }
+        [
+            {
+                "id": 1,
+                "heat": 1
+            },
+            {
+                "id": 2,
+                "heat": 5
+            }
+        ]
+        
+## Determination map [/map/determination]
+Determination level data
 
-### Remove a Note [DELETE]
-+ Response 204
+### Retrieve determination level heat map data [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "heat": 1
+            },
+            {
+                "id": 2,
+                "heat": 5
+            }
+        ]
+        
+## Anger map [/map/anger]
+Anger level data
+
+### Retrieve anger level heat map data [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "heat": 1
+            },
+            {
+                "id": 2,
+                "heat": 5
+            }
+        ]
