@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>OpenLayers Demo</title>
+    <title>Europrapor Map</title>
     <style type="text/css">
       html, body, #basicMapt {
           width: 100%;
