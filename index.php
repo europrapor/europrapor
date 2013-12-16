@@ -93,25 +93,25 @@ var lat = position.coords.latitude;
 	<fieldset data-role="fieldcontain"> 
 		<label for="slider1">Joy</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider1" id="slider-1" value="2" min="0" max="5" />
+		<input type="range" name="slider1" id="slider-1" value="-1" min="0" max="5" />
 		</div>
 		</fieldset>
 	<fieldset data-role="fieldcontain"> 	
 		<label for="slider2">Fear</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider2" id="slider-2" value="2" min="0" max="5" />
+		<input type="range" name="slider2" id="slider-2" value="-1" min="0" max="5" />
 		</div>
 </fieldset>
 	<fieldset data-role="fieldcontain"> 		
 		<label for="slider3">Determination</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider3" id="slider-3" value="2" min="0" max="5" />
+		<input type="range" name="slider3" id="slider-3" value="-1" min="0" max="5" />
 		</div>
 		</fieldset>
 	<fieldset data-role="fieldcontain"> 
 		<label for="slider4">Anger</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider4" id="slider-4" value="2" min="0" max="5" />
+		<input type="range" name="slider4" id="slider-4" value="-1" min="0" max="5" />
 		</div>
 </fieldset>
 		<input type="submit"  value="submit">
