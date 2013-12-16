@@ -24,7 +24,7 @@ $(document).bind("mobileinit", function(){
  <div data-role="header">  <h1>Europrapor</h1></div>
  <div data-role="content">
 
-<button onclick="getLocation()">If you agree to share your broad location, please click here </button>
+<button onclick="getLocation()">Press to map your flag </button>
 
 <a id='myField'></a>
 
@@ -87,47 +87,36 @@ var lat = position.coords.latitude;
    <form method="POST" action="./valform.php" id="register-form">
 		<input type="text" name="resolution" id="resolution"  value=""  readonly="readonly">
 	
-	<fieldset data-role="fieldcontain"> 
-		<label for="slider">Requested location privacy level:</label>
-		<div data-role="fieldcontain">
-		<input type="range" name="slider" id="slider" value="25" min="0" max="100">
-		</div>
-		</fieldset>
+		<input  type="hidden" name="slider" id="slider" value="-1" min="0" max="100">
+		
 	<fieldset data-role="fieldcontain"> 
 		<label for="slider1">Joy</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider1" id="slider-1" value="25" min="0" max="100" />
+		<input type="range" name="slider1" id="slider-1" value="2" min="0" max="5" />
 		</div>
 		</fieldset>
 	<fieldset data-role="fieldcontain"> 	
 		<label for="slider2">Fear</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider2" id="slider-2" value="25" min="0" max="100" />
+		<input type="range" name="slider2" id="slider-2" value="2" min="0" max="5" />
 		</div>
 </fieldset>
 	<fieldset data-role="fieldcontain"> 		
 		<label for="slider3">Determination</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider3" id="slider-3" value="25" min="0" max="100" />
+		<input type="range" name="slider3" id="slider-3" value="2" min="0" max="5" />
 		</div>
 		</fieldset>
 	<fieldset data-role="fieldcontain"> 
 		<label for="slider4">Anger</label>
 		<div data-role="fieldcontain">
-		<input type="range" name="slider4" id="slider-4" value="25" min="0" max="100" />
+		<input type="range" name="slider4" id="slider-4" value="2" min="0" max="5" />
 		</div>
 </fieldset>
 		<input type="submit"  value="submit">
 
 	</form>
   </div>
-  
-  
-
-
- 
- 
- 
  </div><!-- /content --> 
 <div data-role="footer">
 	<h4>Euromaidan open services </h4>
