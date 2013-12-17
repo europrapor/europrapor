@@ -12,7 +12,7 @@ $conn = new PDO('mysql:host=localhost;dbname=369165','369165','thomas79');
 
 # Build SQL SELECT statement including x and y columns
 #$sql = 'SELECT *, x AS x, y AS y FROM alpha_rows';
-$sql = 'SELECT rep1 AS x FROM alpha_rows';
+$sql = 'SELECT rep1 AS x,count(*) as eff FROM alpha_rows group by rep1';
 /*
 * If bbox variable is set, only return records that are within the bounding box
 * bbox should be a string in the form of 'southwest_lng,southwest_lat,northeast_lng,northeast_lat'
@@ -32,8 +32,8 @@ if (!$rs) {
 
 # Build GeoJSON feature collection array
 $geojson = array(
-   'type'      => 'FeatureCollection',
-   'features'  => array()
+   max      => 46,
+   data  => array()
 );
 
 # Loop through rows to build feature arrays
@@ -42,31 +42,28 @@ while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
     $iparr = split ("=", $row['x']); 
     $xx= split ("&", $iparr[1]);
     $x=$xx[0];
-    
     $y=  $iparr[2];
-  
+    $c=  $row['eff'];
+
     
     # Remove x and y fields from properties (optional)
     unset($properties['x']);
-    unset($properties['y']);
+    unset($properties['eff']);
     $feature = array(
-        'type' => 'Feature',
-        'geometry' => array(
-            'type' => 'Point',
-            'coordinates' => array(
-                
-                
-                $y,
-                $x
-            )
-        ),
-        'properties' => $properties
+
+                lat=>$y,
+                'lon'=>$x,
+				'count'=>$c
+            
+        
+     
     );
     # Add feature arrays to feature collection array
-    array_push($geojson['features'], $feature);
+    array_push($geojson['data'], $feature);
 }
 
 header('Content-type: application/json');
-echo json_encode($geojson, JSON_NUMERIC_CHECK);
+#echo json_encode($geojson, JSON_NUMERIC_CHECK);
+echo $_GET['callback'] . '('.json_encode($geojson).')';exit;
 $conn = NULL;
 ?>
