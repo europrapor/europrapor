@@ -1,3 +1,3 @@
 <?
-$link = mysql_connect('localhost', 'xx', 'xx');
+$link = mysql_connect('localhost', 'user', 'pass');
 ?>
