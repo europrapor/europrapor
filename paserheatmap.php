@@ -8,7 +8,7 @@
  */
 
 # Connect to MySQL database
-$conn = new PDO('mysql:host=localhost;dbname=369165','369165','thomas79');
+include('mysql_pdo_conn.php');
 
 # Build SQL SELECT statement including x and y columns
 #$sql = 'SELECT *, x AS x, y AS y FROM alpha_rows';
