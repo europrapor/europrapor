@@ -1,5 +1,4 @@
 <?php
-
 if (!empty($_SERVER['HTTP_CLIENT_IP']))
 {
   $ip=$_SERVER['HTTP_CLIENT_IP'];
@@ -13,7 +12,7 @@ else
   $ip=$_SERVER['REMOTE_ADDR'];
 }
 
-$datetime = new DateTime();
+$datetime = new DateTime('NOW', new DateTimeZone('UTC'));
 
 //$line= json_encode(array('ip' => $ip)) . ' '. date('Y-m-d h:i:s') . ' ' . $datetime->format('U') . ' ' . $_POST['resolution']  . ' ' .$_POST['slider'] . ' ' .$_POST['slider1'] . ' ' .$_POST['slider2'] . ' ' .$_POST['slider3'] . ' ' .$_POST['slider4'];
 //echo $line; //
