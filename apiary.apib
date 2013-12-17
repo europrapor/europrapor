@@ -27,62 +27,19 @@ Maps related data
                 }
             }
         ]
-
-## Joy map [/map/joy]
-Joy level data
-
-### Retrieve joy level heat map data [GET]
-+ Response 200 (application/json)
-
-        [
-            {
-                "id": 1,
-                "heat": 1
-            },
-            {
-                "id": 2,
-                "heat": 5
-            }
-        ]
-
-## Fear map [/map/fear]
-Fear level data
-
-### Retrieve fear level heat map data [GET]
-+ Response 200 (application/json)
-
-        [
-            {
-                "id": 1,
-                "heat": 1
-            },
-            {
-                "id": 2,
-                "heat": 5
-            }
-        ]
         
-## Determination map [/map/determination]
-Determination level data
+## Emotion maps IDs [/maps]
+A list of available emotion maps
 
-### Retrieve determination level heat map data [GET]
+### Retrieve a list of available emotion maps IDs [GET]
 + Response 200 (application/json)
 
-        [
-            {
-                "id": 1,
-                "heat": 1
-            },
-            {
-                "id": 2,
-                "heat": 5
-            }
-        ]
-        
-## Anger map [/map/anger]
-Anger level data
+        ["fear", "joy", "anger"]
 
-### Retrieve anger level heat map data [GET]
+## Emotion maps [/map/{id}]
+Emotion maps data
+
+### Retrieve emotion level heat map data [GET]
 + Response 200 (application/json)
 
         [
@@ -117,5 +74,5 @@ User related data
             "privacy": 10
         }
 
-+ Response 200
++ Response 201
         
