@@ -1,0 +1,78 @@
+FORMAT: 1A
+HOST: http://www.google.com
+
+# Europrapor API
+Europrapor API is a RESTful web service used to collect anonymous geodata for creating heat maps based on peoples mental state during Euromaidan demonstrations in Ukraine, which began on the night of 21 November 2013 with very large public protests demanding closer European integration.
+
+# Group Maps
+Maps related data
+
+## Position data [/map]
+### List of all check-ins [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "position": {
+                    "lt": 35.45645,
+                    "lg": 67.987986
+                }
+            },
+            {
+                "id": 2,
+                "position": {
+                    "lt": 35.45645,
+                    "lg": 67.987986
+                }
+            }
+        ]
+        
+## Emotion maps IDs [/maps]
+A list of available emotion maps
+
+### Retrieve a list of available emotion maps IDs [GET]
++ Response 200 (application/json)
+
+        ["fear", "joy", "anger"]
+
+## Emotion maps [/map/{id}]
+Emotion maps data
+
+### Retrieve emotion level heat map data [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "heat": 1
+            },
+            {
+                "id": 2,
+                "heat": 5
+            }
+        ]
+
+# Group User Data
+User related data
+
+## Check-in [/check-in]
+### Submit user data [POST]
++ Request (application/json)
+
+        {
+            "position": {
+                "lt": 35.45645,
+                "lg": 67.987986
+            },
+            "mental_state": {
+                "joy": 2,
+                "determination": 3,
+                "anger": 1,
+                "fear": 0
+            },
+            "privacy": 10
+        }
+
++ Response 201
+        
