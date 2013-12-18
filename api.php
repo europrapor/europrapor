@@ -2,6 +2,7 @@
 
 $maps = ['joy', 'fear', 'determination', 'anger'];
 $response = '';
+$input = file_get_contents('php://input');
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (preg_match('/^\/map\/(\w+)$/', $_SERVER['SCRIPT_NAME'], $matches) && in_array($matches[1], $maps)) {
@@ -67,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } else {
         header("HTTP/1.0 400 Bad Request");
     }
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['SCRIPT_NAME'] == '/check-in' && isset($_POST['check-in'])) {
-    $checkin = json_decode($_POST['check-in'], true);
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['SCRIPT_NAME'] == '/check-in' && $input != '') {
+    $checkin = json_decode($input, true);
     $mental_state = $checkin['mental_state'];
     include('mysql_pdo_conn.php');
 
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ','.strval($mental_state['anger']).')';
 
     if ($conn->exec($sql)) {
-        header("HTTP/1.0 201 Created");
+        header("HTTP/1.0 200 OK");
     } else {
         header("HTTP/1.0 400 Bad Request");
     }
