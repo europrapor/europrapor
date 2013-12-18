@@ -6,7 +6,7 @@ $response = '';
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (preg_match('/^\/map\/(\w+)$/', $_SERVER['SCRIPT_NAME'], $matches) && in_array($matches[1], $maps)) {
         include('mysql_pdo_conn.php');
-        $sql = 'SELECT id, unixtime, rep1 AS coords, rep2 AS privacy, rep3 AS joy, rep4 AS fear, rep5 AS determination, divers AS anger FROM alpha_rows';
+        $sql = 'SELECT id, privacy, joy, fear, determination, anger FROM beta_rows';
         $rows = $conn->query($sql);
         if (!$rows) {
             echo 'An SQL error occured.\n';
@@ -30,7 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             break;
         case '/map':
             include('mysql_pdo_conn.php');
-            $sql = 'SELECT id, unixtime, rep1 AS coords, rep2 AS privacy, rep3 AS joy, rep4 AS fear, rep5 AS determination, divers AS anger FROM alpha_rows';
+            // 0.00015 ~ 15 meters
+            $sql = 'SELECT r1.id, r1.lt, r1.lg, r1.privacy
+                FROM beta_rows AS r1, beta_rows AS r2
+                WHERE r1.lt <= (r2.lt + 0.00015)
+                AND r1.lt >= (r2.lt - 0.00015)
+                AND r1.lg <= (r2.lg + 0.00015)
+                AND r1.lg >= (r2.lg - 0.00015)
+                GROUP BY r1.id
+                HAVING COUNT(r2.id) >= r1.privacy;';
             $rows = $conn->query($sql);
             if (!$rows) {
                 echo 'An SQL error occured.\n';
@@ -39,15 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             $response = array();
             while ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
-                $latlon = split('&', str_replace(['lon=', 'lat='], '', $row['coords']));
-                $lt = $latlon[0];
-                $lg = $latlon[1];
-
                 $checkin = [
                     'id' => intval($row['id']),
                     'position' => [
-                        'lt' => $lt,
-                        'lg' => $lg
+                        'lt' => doubleval($row['lt']),
+                        'lg' => doubleval($row['lg'])
                     ]
                 ];
 
@@ -68,11 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $mental_state = $checkin['mental_state'];
     include('mysql_pdo_conn.php');
 
-    $datetime = new DateTime('NOW', new DateTimeZone('UTC'));
-    $sql = 'INSERT INTO alpha_rows (time, unixtime, rep1, rep2, rep3, rep4, rep5, divers) '.
-        'VALUES ("'.date('Y-m-d h:i:s').'",'.$datetime->format('U').',"lat='.
-        strval($checkin['position']['lt']).'&lon='.strval($checkin['position']['lg']).'",'.strval($checkin['privacy']).','.
-        strval($mental_state['joy']).','.strval($mental_state['fear']).','.strval($mental_state['determination']).','.strval($mental_state['anger']).')';
+    $sql = 'INSERT INTO beta_rows (lt, lg, privacy, joy, fear, determination, anger) '.
+        'VALUES ('.strval($checkin['position']['lt']).
+        ','.strval($checkin['position']['lg']).
+        ','.strval($checkin['privacy']).
+        ','.strval($mental_state['joy']).
+        ','.strval($mental_state['fear']).
+        ','.strval($mental_state['determination']).
+        ','.strval($mental_state['anger']).')';
 
     if ($conn->exec($sql)) {
         header("HTTP/1.0 201 Created");
