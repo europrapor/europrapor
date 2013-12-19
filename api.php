@@ -27,7 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     switch ($_SERVER['SCRIPT_NAME']) {
         case '/maps':
-            $response = $maps;
+            $response = array();
+            foreach ($maps as $map_id) {
+                array_push($response, ['map_id' => $map_id]);
+            }
             break;
         case '/map':
             include('mysql_pdo_conn.php');
