@@ -34,7 +34,17 @@ A list of available emotion maps
 ### Retrieve a list of available emotion maps IDs [GET]
 + Response 200 (application/json)
 
-        ["fear", "joy", "anger"]
+        [
+            {
+                "map_id": "fear"
+            },
+            {
+                "map_id": "joy"
+            },
+            {
+                "map_id": "anger"
+            }
+        ]
 
 ## Emotion maps [/map/{id}]
 Emotion maps data
