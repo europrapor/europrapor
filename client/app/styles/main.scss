@@ -1,0 +1,25 @@
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+
+@import "sass-bootstrap/lib/bootstrap";
+@import "normalize-scss/normalize";
+
+.page-header {
+    margin: 0;
+}
+.main-content {
+
+    .maps {
+        padding: 0 10px;
+    }
+}
+.check-in {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+
+    .btn {
+        width: 100%;
+    }
+}
