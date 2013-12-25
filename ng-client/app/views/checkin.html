@@ -1,12 +1,9 @@
 <div ng-controller="CheckinCtrl">
-  <h1>Checkin</h1>
 
-  <ul>
-    <li ng-repeat="emo in sliders">{{emo}}</li>
-  </ul>
+  <div class="emotion-form">
+    <div ng-repeat="(id, value) in sliders" class="range-slider" id="{{id}}" ng-slider></div>
+  </div>
 
-  <a href="#" ng-click="my_func()">click me</a>
-
-  
+  <div class="check-in ">Check-in</div>
 
 </div>

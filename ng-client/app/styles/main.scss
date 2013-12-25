@@ -1,91 +1,125 @@
 $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 
+/* emotion form range slider colors */
+$low: #72d0ff;
+$high: #f30;
+
+/* ui colors */
+$ui-blue: #2689C0;
+$ui-white: #fafafa;
+
 @import 'sass-bootstrap/lib/bootstrap';
 
-.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}
-
-/* Space out content a bit */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+  background: $ui-white;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-    padding-left: 15px;
-    padding-right: 15px;
+nav {
+  ul,
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 }
 
-/* Custom page header */
-.header {
-    border-bottom: 1px solid #e5e5e5;
+/* header bar styles */
+.app-header {
+  $size: 50px;
+
+  background: $ui-blue;
+  color: $ui-white;
+  height: $size;
+  text-align: center;
+  position: relative;
+
+  .navigation,
+  ul { height: 100%; }
+
+  .prev { float: left; }
+  .next { float: right; }
+
+  .glyphicon {
+    font-size: 24px;
+    cursor: pointer;
+    height: $size;
+    width: $size;
+    line-height: 48px;
+    top: 0;
+  }
+
+  .current {
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 50px;
+    width: 100%;
+  }
 }
 
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
+.emotion-form {
+  padding: 5px 10px;
 }
 
-/* Custom page footer */
-.footer {
-    padding-top: 19px;
-    color: #777;
-    border-top: 1px solid #e5e5e5;
-}
+/* range slider styles */
+.range-slider {
+  $slider-size: 42px;
+  $thumb-size: 48px;
 
-.container-narrow > hr {
-    margin: 30px 0;
-}
+  height: $slider-size;
+  background: linear-gradient(left, $low, $high);
+  margin: 20px 0;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
 
-/* Main marketing message and sign up button */
-.jumbotron {
+  /*
+   * slider thumb
+   *
+   * touch area is an empty square which includes smaller
+   * visible thumb
+  */
+  .sliderThumb {
+    width: $thumb-size;
+    height: $thumb-size;
+    top: ($slider-size - $thumb-size) / 2;
+    position: absolute;
+
+    /* visible thumb */
+    &::before {
+      $thumb-mark-size: 4px;
+
+      content: '';
+      display: block;
+      position: absolute;
+      height: $thumb-size;
+      width: $thumb-mark-size;
+      background: #000;
+      left: ($thumb-size - $thumb-mark-size) / 2;
+    }
+  }
+
+  /* slider label */
+  .sliderLabelsDiv {
+    font-weight: bold;
+    font-size: 28px;
+    color: rgba(white, .6);
     text-align: center;
-    border-bottom: 1px solid #e5e5e5;
+    height: 100%;
+  }
 }
 
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-}
+/* check-in button */
+.check-in {
+  $size: 50px;
 
-/* Supporting marketing content */
-.marketing {
-    margin: 40px 0;
-}
-
-.marketing p + h4 {
-    margin-top: 28px;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
-
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 30px;
-    }
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
+  position: absolute;
+  bottom: 0;
+  background: $ui-blue;
+  color: $ui-white;
+  width: 100%;
+  height: $size;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: $size;
 }
