@@ -19,6 +19,8 @@
   "smarttabs": true,
   "laxcomma": true,
   "globals": {
-    "angular": false
+    "angular": false,
+    "_": false,
+    "$": false
   }
 }

@@ -3,6 +3,8 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 /* emotion form range slider colors */
 $low: #72d0ff;
 $high: #f30;
+$danger: $high;
+$safe: #4cdb30;
 
 /* ui colors */
 $ui-blue: #2689C0;
@@ -58,19 +60,24 @@ nav {
 }
 
 .emotion-form {
-  padding: 5px 10px;
+  padding: 3px 10px;
 }
 
 /* range slider styles */
 .range-slider {
   $slider-size: 42px;
-  $thumb-size: 48px;
+  $thumb-size: 46px;
 
   height: $slider-size;
   background: linear-gradient(left, $low, $high);
-  margin: 20px 0;
+  margin: 10px 0;
   position: relative;
   -webkit-tap-highlight-color: transparent;
+
+  /* privacy slider styles */
+  &.privacy {
+    background: linear-gradient(left, $danger, $safe);
+  }
 
   /*
    * slider thumb
@@ -102,7 +109,7 @@ nav {
   .sliderLabelsDiv {
     font-weight: bold;
     font-size: 28px;
-    color: rgba(white, .6);
+    color: rgba(white, .8);
     text-align: center;
     height: 100%;
   }
@@ -122,4 +129,5 @@ nav {
   font-size: 26px;
   font-weight: bold;
   line-height: $size;
+  cursor: pointer;
 }
