@@ -131,3 +131,37 @@ nav {
   line-height: $size;
   cursor: pointer;
 }
+
+/* overlay loader */
+.overlay {
+  position: absolute;
+  background: rgba(black, .6);
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100%;
+
+  &.glyphicon-refresh::before {
+    color: $ui-white;
+    font-size: 120px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+    display: block;
+    width: 120px;
+    height: 120px;
+    animation: spin 1600ms linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

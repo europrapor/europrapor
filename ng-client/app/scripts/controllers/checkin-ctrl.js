@@ -14,6 +14,8 @@ angular.module('ngEuroPraporApp')
     };
 
     $scope.performCheckin = function() {
+      $scope.loading = true;
+
       navigator.geolocation.getCurrentPosition(function (position) {
         var checkin;
 
@@ -28,16 +30,19 @@ angular.module('ngEuroPraporApp')
           privacy: $scope.sliders.privacy
         });
 
-        checkin.$save();
+        checkin.$save()
+          .then(function (res) {
+            $scope.loading = false;
+          },
+          function (err) {
+            console.log(err);
+          });
       });
     };
 
   })
   .directive('ngSlider', function() {
     var rangeSlider = function ($scope, $element, $attrs) {
-      if ($attrs.id == 'privacy')
-          $element[0].classList.add('privacy');
-
       new SliderControl($element[0], 0, 10, {
         label: $attrs.id.toUpperCase()
       , initialValue: $scope.sliders[$attrs.id]
@@ -48,4 +53,19 @@ angular.module('ngEuroPraporApp')
     };
 
     return rangeSlider;
+  })
+  .directive('ngLoader', function() {
+    return {
+      restrict: 'AE'
+    , replace: true
+    , template: '<div class="overlay glyphicon glyphicon-refresh"></div>'
+    , link: function ($scope, $element, $attrs) {
+      $scope.$watch('loading', function ($val) {
+        if ($val)
+          $element.fadeIn(200);
+        else
+          $element.fadeOut(200);
+      });
+    }
+    };
   });
