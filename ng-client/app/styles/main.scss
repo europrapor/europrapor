@@ -25,7 +25,7 @@ nav {
   }
 }
 
-/* header bar styles */
+/* Header bar styles */
 .app-header {
   $size: 50px;
 
@@ -63,21 +63,40 @@ nav {
   padding: 3px 10px;
 }
 
-/* range slider styles */
+/* Range slider styles */
+
+/* use bg-image gradients */
+.range-slider {
+  background: url(../images/emotion-gradient.png) repeat-y;
+  background-size: 100%;
+
+  /* privacy slider styles */
+  &.privacy {
+    background: url(../images/privacy-gradient.png) repeat-y;
+    background-size: 100%;
+  }
+}
+
+/* use CSS gradients if supported */
+.cssgradients {
+  .range-slider {
+    background: linear-gradient(left, $low, $high);
+
+    /* privacy slider styles */
+    &.privacy {
+      background: linear-gradient(left, $danger, $safe);
+    }
+  }
+}
+
 .range-slider {
   $slider-size: 42px;
   $thumb-size: 46px;
 
   height: $slider-size;
-  background: linear-gradient(left, $low, $high);
   margin: 10px 0;
   position: relative;
   -webkit-tap-highlight-color: transparent;
-
-  /* privacy slider styles */
-  &.privacy {
-    background: linear-gradient(left, $danger, $safe);
-  }
 
   /*
    * slider thumb
@@ -115,7 +134,7 @@ nav {
   }
 }
 
-/* check-in button */
+/* Check-in button */
 .check-in {
   $size: 50px;
 
@@ -132,7 +151,7 @@ nav {
   cursor: pointer;
 }
 
-/* overlay loader */
+/* Overlay loader */
 .overlay {
   position: absolute;
   background: rgba(black, .6);
@@ -141,19 +160,47 @@ nav {
   width: 100% !important;
   height: 100%;
 
-  &.glyphicon-refresh::before {
-    color: $ui-white;
-    font-size: 120px;
+  .glyphicon {
+    display: none;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     margin: auto;
     position: absolute;
+  }
+
+  &.spinner .glyphicon-refresh {
     display: block;
+    color: $ui-white;
+    font-size: 120px;
     width: 120px;
     height: 120px;
-    animation: spin 1600ms linear infinite;
+    animation: spin 1200ms linear infinite;
+  }
+  &.success .glyphicon-ok-circle {
+    display: block;
+    color: lighten($safe, 10%);
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
+  }
+  &.error .glyphicon-warning-sign {
+    display: block;
+    color: lighten($high, 10%);
+    font-size: 120px;
+    width: 150px;
+    height: 120px;
+    text-align: center;
+  }
+  &.denied .glyphicon-minus-sign,
+  &.unavailable .glyphicon-globe,
+  &.timeout .glyphicon-time {
+    display: block;
+    color: lighten($high, 10%);
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
   }
 }
 

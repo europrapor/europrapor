@@ -13,7 +13,12 @@ angular.module('ngEuroPraporApp')
       , privacy:        10
     };
 
+    function setLoaderType (type) {
+      $scope.loaderIcon = type + ' enabled';
+    }
+
     $scope.performCheckin = function() {
+      setLoaderType('spinner');
       $scope.loading = true;
 
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -32,11 +37,34 @@ angular.module('ngEuroPraporApp')
 
         checkin.$save()
           .then(function (res) {
-            $scope.loading = false;
+            // SUCCESS
+            setLoaderType('success');
           },
           function (err) {
-            console.log(err);
+            // NETWORK_ERROR
+            setLoaderType('error');
+          })
+          .finally(function() {
+            $timeout(function() {
+              $scope.loading = false;
+            }, 1000);
           });
+      },
+      function (err) {
+        switch (err.code) {
+          case 1:
+            // PERMISSION_DENIED
+            setLoaderType('denied');
+            break;
+          case 2:
+            // POSITION_UNAVAILABLE
+            setLoaderType('unavailable');
+            break;
+          case 3:
+            // TIMEOUT
+            setLoaderType('timeout');
+            break;
+        }
       });
     };
 
@@ -58,7 +86,14 @@ angular.module('ngEuroPraporApp')
     return {
       restrict: 'AE'
     , replace: true
-    , template: '<div class="overlay glyphicon glyphicon-refresh"></div>'
+    , template: '<div class="overlay">' +
+        '<i class="glyphicon glyphicon-refresh"></i>'+
+        '<i class="glyphicon glyphicon-minus-sign"></i>'+
+        '<i class="glyphicon glyphicon-globe"></i>'+
+        '<i class="glyphicon glyphicon-time"></i>'+
+        '<i class="glyphicon glyphicon-ok-circle"></i>'+
+        '<i class="glyphicon glyphicon-warning-sign"></i>'+
+        '</div>'
     , link: function ($scope, $element, $attrs) {
       $scope.$watch('loading', function ($val) {
         if ($val)
