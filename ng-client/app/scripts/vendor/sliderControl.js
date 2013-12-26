@@ -54,12 +54,13 @@
  *   - fixed touch vs. mouse events (support for both)
  */
 
- /* global WebKitCSSMatrix */
+ /* global WebKitCSSMatrix, CSSMatrix, cssTransitionName,
+    cssTransformPrefixName, cssTransformName */
 
 (function() {
 
   var disableMouse = false,
-    moveEventName, endEventName;
+      moveEventName, endEventName;
 
 
   function SliderControl(el, args, options) {
@@ -155,9 +156,9 @@
     }
 
     // Init transform
-    this.thumb.webkitTransitionProperty = '-webkit-transform';
-    this.thumb.style.webkitTransitionTimingFunction = this.options.easing;
-    this.thumb.style.webkitTransform = 'translate3d(0, 0, 0)';
+    this.thumb[cssTransitionName + 'Property'] = cssTransformPrefixName + 'transform';
+    this.thumb.style[cssTransitionName + 'TimingFunction'] = this.options.easing;
+    this.thumb.style[cssTransformName] = 'translate3d(0, 0, 0)';
 
     // listen to both touch & mouse, then disable one!
     this.thumb.addEventListener('touchstart', this, true);
@@ -421,7 +422,7 @@
         case 'orientationchange':
           this.onOrientation(e);
           break;
-        case 'webkitTransitionEnd':
+        case cssTransitionName + 'End':
           this.onTransitionEnd(e);
           break;
       }
@@ -431,13 +432,13 @@
       if (typeof pos != 'undefined') {
         this._position = pos;
         this.percent = Math.floor(pos / this.maxSlide * 100);
-        this.thumb.style.webkitTransform = 'translate3d(' + pos + 'px, 0, 0)';
+        this.thumb.style[cssTransformName] = 'translate3d(' + pos + 'px, 0, 0)';
       }
       return this._position;
     },
 
     refresh: function() {
-      this.thumb.style.webkitTransitionDuration = '0';
+      this.thumb.style[cssTransitionName + 'Duration'] = '0';
       this.wrapperWidth = this.wrapper.clientWidth;
       this.maxSlide = this.wrapper.clientWidth - this.thumb.offsetWidth - parseInt(getComputedStyle(this.wrapper, null).getPropertyValue('padding-left')) - parseInt(getComputedStyle(this.wrapper, null).getPropertyValue('padding-right'));
       //console.log(['min' , this.maxSlide]);
@@ -502,8 +503,10 @@
         return;
       e.preventDefault();
       var x = e.targetTouches ? e.targetTouches[0].clientX : e.clientX;
-      var theTransform = window.getComputedStyle(this.thumb, null).webkitTransform;
-      theTransform = new WebKitCSSMatrix(theTransform).m41;
+      var theTransform = window.getComputedStyle(this.thumb, null)[cssTransformName];
+      theTransform = 'WebKitCSSMatrix' in window ?
+        new WebKitCSSMatrix(theTransform).m41 :
+        new CSSMatrix(theTransform).m41;
 
       var delta = x - this.startX;
       if (delta === 0 || (theTransform < 0 && delta < 0) || (theTransform > this.maxSlide && delta > 0)) return false;
@@ -552,15 +555,15 @@
     },
 
     onTransitionEnd: function() {
-      this.thumb.style.webkitTransitionDuration = '0';
-      this.thumb.removeEventListener('webkitTransitionEnd', this, false);
+      this.thumb.style[cssTransitionName + 'Duration'] = '0';
+      this.thumb.removeEventListener(cssTransitionName + 'End', this, false);
       this.triggerCallback('slideend');
     },
 
     slideTo: function(percent) {
-      this.thumb.style.webkitTransitionTimingFunction = this.options.easing;
-      this.thumb.style.webkitTransitionDuration = this.options.easingDuration + 'ms';
-      this.thumb.addEventListener('webkitTransitionEnd', this, false);
+      this.thumb.style[cssTransitionName + 'TimingFunction'] = this.options.easing;
+      this.thumb.style[cssTransitionName + 'Duration'] = this.options.easingDuration + 'ms';
+      this.thumb.addEventListener(cssTransitionName + 'End', this, false);
 
       var pos = Math.floor(this.maxSlide * percent / 100);
       this.position(pos);
