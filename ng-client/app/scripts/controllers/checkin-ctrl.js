@@ -13,12 +13,8 @@ angular.module('ngEuroPraporApp')
       , privacy:        10
     };
 
-    function setLoaderType (type) {
-      $scope.loaderIcon = type + ' enabled';
-    }
-
     $scope.performCheckin = function() {
-      setLoaderType('spinner');
+      $scope.loaderIcon = 'spinner';
       $scope.loading = true;
 
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -38,11 +34,11 @@ angular.module('ngEuroPraporApp')
         checkin.$save()
           .then(function (res) {
             // SUCCESS
-            setLoaderType('success');
+            $scope.loaderIcon = 'success';
           },
           function (err) {
             // NETWORK_ERROR
-            setLoaderType('error');
+            $scope.loaderIcon = 'error';
           })
           .finally(function() {
             $timeout(function() {
@@ -54,17 +50,29 @@ angular.module('ngEuroPraporApp')
         switch (err.code) {
           case 1:
             // PERMISSION_DENIED
-            setLoaderType('denied');
+            $scope.$apply(function() {
+              $scope.loaderIcon = 'denied';
+            });
             break;
           case 2:
             // POSITION_UNAVAILABLE
-            setLoaderType('unavailable');
+            $scope.$apply(function() {
+              $scope.loaderIcon = 'unavailable';
+            });
             break;
           case 3:
             // TIMEOUT
-            setLoaderType('timeout');
+            $scope.$apply(function() {
+              $scope.loaderIcon = 'timeout';
+            });
             break;
         }
+
+        $scope.$apply(function() {
+          $timeout(function() {
+            $scope.loading = false;
+          }, 1000);
+        });
       });
     };
 
