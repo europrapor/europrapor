@@ -6,7 +6,8 @@ angular.module('ngEuroPraporApp')
   .controller('DensityMapCtrl', function ($scope, $timeout, DensityMap) {
     // fetch geodata
     var densityData = DensityMap.query(function() {
-      var cacheRead1, cacheRead2, cacheWrite;
+      var cacheRead1, cacheRead2, cacheWrite,
+          touchNavigation, zoom;
 
       var OLReadyData = {
             max: 1,
@@ -30,7 +31,9 @@ angular.module('ngEuroPraporApp')
       densityMap = new OpenLayers.Map('density-map');
 
       // create OSM layer
-      OSMLayer = new OpenLayers.Layer.OSM();
+      OSMLayer = new OpenLayers.Layer.OSM('Open Street Map', null, {
+        transitionEffect: 'resize'
+      });
 
       // create density map layer
       densityLayer = new OpenLayers.Layer.Heatmap('DensityLayer', densityMap, OSMLayer,
@@ -73,14 +76,24 @@ angular.module('ngEuroPraporApp')
         }
       });
 
+      // enable touch optimized navigation
+      touchNavigation = new OpenLayers.Control.TouchNavigation({
+        dragPanOptions: {
+          enableKinetic: true
+        }
+      });
+
+      zoom = new OpenLayers.Control.Zoom();
+
       // add layers to map
       densityMap.addLayers([OSMLayer, densityLayer]);
 
       // set initial zoom level
       densityMap.zoomToMaxExtent();
 
-      // add cache controllers
-      densityMap.addControls([cacheRead1, cacheRead2, cacheWrite]);
+      // add cache controllers & other controls
+      densityMap.addControls([cacheRead1, cacheRead2, cacheWrite,
+        touchNavigation, zoom]);
 
       // put Open Layers ready data to the map
       densityLayer.setDataSet(OLReadyData);
