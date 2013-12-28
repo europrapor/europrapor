@@ -48,6 +48,12 @@ nav {
     width: $size;
     line-height: 48px;
     top: 0;
+
+    &,
+    &:hover {
+      color: $ui-white;
+      text-decoration: none;
+    }
   }
 
   .current {
@@ -211,4 +217,11 @@ nav {
   to {
     transform: rotate(360deg);
   }
+}
+
+.map {
+  width: 100%;
+}
+#OpenLayers_Control_Attribution_7 {
+  display: none;
 }

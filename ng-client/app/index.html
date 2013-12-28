@@ -66,9 +66,17 @@
     <script src="bower_components/sass-bootstrap/js/popover.js"></script>
     -->
 
+    <!-- conditional resource loader -->
     <script src="scripts/vendor/yepnope.js"></script>
+
+    <!-- CSS3 stuff shims -->
     <script src="scripts/vendor/cssTransitionsTransformsCSSMatrix.js"></script>
     <script src="scripts/vendor/sliderControl.js"></script>
+
+    <!-- map plugins -->
+    <script src="scripts/vendor/open-layers.js"></script>
+    <script src="scripts/vendor/heatmap.js"></script>
+    <script src="scripts/vendor/heatmap-openlayers.js"></script>
 
     <!-- modules -->
     <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -76,15 +84,21 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
 
-    <!-- scripts -->
+    <!-- config -->
     <script src="scripts/app.js"></script>
 
+    <!-- controllers -->
     <script src="scripts/controllers/checkin-ctrl.js"></script>
     <script src="scripts/controllers/density-map-ctrl.js"></script>
     <script src="scripts/controllers/layers-map-ctrl.js"></script>
     <script src="scripts/controllers/header-ctrl.js"></script>
 
+    <!-- services -->
     <script src="scripts/services/checkin-service.js"></script>
+    <script src="scripts/services/density-map-service.js"></script>
+
+    <!-- directives -->
+    <script src="scripts/directives/resizable.js"></script>
     <!-- endbuild -->
 </body>
 </html>
