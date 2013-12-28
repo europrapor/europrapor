@@ -1,11 +1,7 @@
-<div ng-controller="CheckinCtrl">
-
-  <div class="emotion-form">
-    <div ng-repeat="(id, value) in sliders" ng-class="{privacy: id == 'privacy'}" class="range-slider" id="{{id}}" ng-slider></div>
-  </div>
-
-  <div class="check-in" ng-click="performCheckin()">Check-in</div>
-
-  <div ng-loader ng-class="loaderIcon"></div>
-
+<div class="emotion-form">
+  <div ng-repeat="(id, value) in sliders" ng-class="{privacy: id == 'privacy'}" class="range-slider" id="{{id}}" ng-slider></div>
 </div>
+
+<div class="check-in" ng-click="performCheckin()">Check-in</div>
+
+<div ng-loader ng-class="loaderIcon"></div>
