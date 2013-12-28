@@ -48,6 +48,8 @@ nav {
     width: $size;
     line-height: 48px;
     top: 0;
+    position: relative;
+    z-index: 9;
 
     &,
     &:hover {
@@ -210,6 +212,7 @@ nav {
   }
 }
 
+/* Loader animation */
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -219,9 +222,10 @@ nav {
   }
 }
 
+/* Maps styles */
 .map {
   width: 100%;
 }
-#OpenLayers_Control_Attribution_7 {
-  display: none;
+.olControlAttribution {
+  display: none !important;
 }
