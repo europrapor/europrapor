@@ -34,7 +34,10 @@ angular.module('ngEuroPraporApp')
 
       // create OSM layer
       OSMLayer = new OpenLayers.Layer.OSM('Open Street Map', null, {
-        transitionEffect: 'resize'
+        transitionEffect: 'resize',
+        numZoomLevels: null,
+        minZoomLevel: 2,
+        maxZoomLevel: 15
       });
 
       // create density map layer
