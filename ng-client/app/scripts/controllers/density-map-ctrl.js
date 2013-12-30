@@ -5,27 +5,10 @@
 angular.module('ngEuroPraporApp')
   .controller('DensityMapCtrl', function ($scope, $timeout, DensityMap) {
     // fetch geodata
-    var densityData = DensityMap.query(function() {
+    DensityMap.get(function (densityData) {
       var cacheRead1, cacheRead2, cacheWrite,
-          touchNavigation, zoom;
-
-      var OLReadyData = {
-            max: 1,
-            data: []
-          },
-          dataLength = densityData.length,
+          touchNavigation, zoom,
           densityMap, OSMLayer, densityLayer;
-
-      // convert geodata to Open Layers ready data
-      while (dataLength--) {
-        OLReadyData.data.push({
-            lonlat: new OpenLayers.LonLat(
-              densityData[dataLength].position.lg,
-              densityData[dataLength].position.lt
-            ),
-            count: 1
-        });
-      }
 
       // create a map
       densityMap = new OpenLayers.Map('density-map', {
@@ -101,7 +84,7 @@ angular.module('ngEuroPraporApp')
         touchNavigation, zoom]);
 
       // put Open Layers ready data to the map
-      densityLayer.setDataSet(OLReadyData);
+      densityLayer.setDataSet(densityData);
 
       // init cache controllers
       cacheRead1.activate();
