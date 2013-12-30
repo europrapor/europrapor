@@ -9,10 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         include('mysql_pdo_conn.php');
         $sql = 'SELECT id, privacy, joy, fear, determination, anger FROM beta_rows';
         $rows = $conn->query($sql);
-        if (!$rows) {
-            echo 'An SQL error occured.\n';
-            exit(1);
-        }
 
         $response = array();
         while ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
@@ -44,10 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 GROUP BY r1.id
                 HAVING COUNT(r2.id) >= r1.privacy;';
             $rows = $conn->query($sql);
-            if (!$rows) {
-                echo 'An SQL error occured.\n';
-                exit(1);
-            }
 
             $response = array();
             while ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
@@ -64,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             break;
     }
 
-    if ($response) {
+    if (is_array($response)) {
         header('Content-type: application/json');
         header("HTTP/1.0 200 OK");
         echo json_encode($response);
