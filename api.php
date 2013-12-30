@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             // 0.00015 ~ 15 meters
             $sql = 'SELECT r1.id, r1.lt, r1.lg, r1.privacy
                 FROM beta_rows AS r1, beta_rows AS r2
-                WHERE time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
+                WHERE r1.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
+                AND r2.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
                 AND r1.lt <= (r2.lt + 0.00015)
                 AND r1.lt >= (r2.lt - 0.00015)
                 AND r1.lg <= (r2.lg + 0.00015)
