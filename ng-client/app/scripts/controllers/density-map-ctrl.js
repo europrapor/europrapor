@@ -28,7 +28,9 @@ angular.module('ngEuroPraporApp')
       }
 
       // create a map
-      densityMap = new OpenLayers.Map('density-map');
+      densityMap = new OpenLayers.Map('density-map', {
+        theme: null
+      });
 
       // create OSM layer
       OSMLayer = new OpenLayers.Layer.OSM('Open Street Map', null, {
