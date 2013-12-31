@@ -3,16 +3,37 @@
 'use strict';
 
 angular.module('ngEuroPraporApp')
-  .controller('LayersMapCtrl', function ($scope, DensityMap, LayersMap) {
-    // console.log(LayersMap('anger'))
-    // fetch geodata
-    DensityMap.get(function (densityData) {
+  .controller('LayersMapCtrl', function ($scope, LayersMap) {
+    // layers colors config
+    var layersColors = {
+      anger: {
+        0.45: 'rgb(255, 0, 0)',
+        0.8: 'rgb(255, 0, 0)'
+      },
+      joy: {
+        0.45: 'rgb(0, 255, 0)',
+        0.8: 'rgb(0, 255, 0)'
+      },
+      fear: {
+        0.9: 'rgb(0, 0, 255)',
+        1.0: 'rgb(0, 0, 255)'
+      },
+      determination: {
+        0.45: 'rgb(255, 255, 0)',
+        0.8: 'rgb(255, 255, 0)'
+      }
+    };
+
+    // fetch emotions maps data
+    LayersMap.get(['anger', 'joy', 'fear', 'determination'],
+      function (layersData) {
       var cacheRead1, cacheRead2, cacheWrite,
           touchNavigation, zoom,
-          densityMap, OSMLayer, densityLayer;
+          emotionMap, OSMLayer,
+          layers = {};
 
       // create a map
-      densityMap = new OpenLayers.Map('layers-map', {
+      emotionMap = new OpenLayers.Map('layers-map', {
         theme: null
       });
 
@@ -24,18 +45,11 @@ angular.module('ngEuroPraporApp')
         maxZoomLevel: 15
       });
 
-      // create density map layer
-      densityLayer = new OpenLayers.Layer.Heatmap('DensityLayer', densityMap, OSMLayer,
-        {
-          visible: true,
-          radius: 10
-        },
-        {
-          isBaseLayer: false,
-          opacity: 0.3,
-          projection: new OpenLayers.Projection('EPSG:4326')
-        }
-      );
+      for (var layer in layersData) {
+        var layerData = layersData[layer];
+
+        layers[layer] = createLayer(layer, emotionMap, OSMLayer, layersColors[layer]);
+      }
 
       // try cache before loading from remote resource
       cacheRead1 = new OpenLayers.Control.CacheRead({
@@ -74,22 +88,48 @@ angular.module('ngEuroPraporApp')
 
       zoom = new OpenLayers.Control.Zoom();
 
-      // add layers to map
-      densityMap.addLayers([OSMLayer, densityLayer]);
+      // add OSM layer to map
+      emotionMap.addLayers([OSMLayer]);
 
       // set initial zoom level
-      densityMap.zoomToMaxExtent();
+      emotionMap.zoomToMaxExtent();
 
       // add cache controllers & other controls
-      densityMap.addControls([cacheRead1, cacheRead2, cacheWrite,
+      emotionMap.addControls([cacheRead1, cacheRead2, cacheWrite,
         touchNavigation, zoom]);
 
-      // put Open Layers ready data to the map
-      densityLayer.setDataSet(densityData);
+      for (var layer in layersData) {
+        var layerData = layersData[layer];
+
+        emotionMap.addLayers([layers[layer]]);
+
+        // put Open Layers ready data to the map
+        layers[layer].setDataSet(layerData);
+      }
 
       // init cache controllers
       cacheRead1.activate();
       cacheRead2.activate();
       cacheWrite.activate();
     });
+
+    function createLayer (name, map, baseLayer, color) {
+      var emotionLayer;
+
+      // create density map layer
+      emotionLayer = new OpenLayers.Layer.Heatmap(name + 'Layer', map, baseLayer,
+        {
+          visible: true,
+          radius: 10,
+          gradient: color,
+          opacity: 50
+        },
+        {
+          isBaseLayer: false,
+          projection: new OpenLayers.Projection('EPSG:4326')
+        }
+      );
+
+      return emotionLayer;
+    }
   });
