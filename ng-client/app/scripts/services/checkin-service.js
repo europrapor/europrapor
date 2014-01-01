@@ -2,5 +2,5 @@
 
 angular.module('ngEuroPraporApp')
   .factory('Checkin', function ($resource) {
-    return $resource('http://devel.api.europrapor.oxogamestudio.com/check-in');
+    return $resource('http://devel.api.maidanpower.org/check-in');
   });
