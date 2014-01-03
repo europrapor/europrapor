@@ -7,20 +7,20 @@ angular.module('ngEuroPraporApp')
     // layers colors config
     var layersColors = {
       anger: {
-        0.45: 'rgb(255, 0, 0)',
-        0.8: 'rgb(255, 0, 0)'
+        fillColor: '#ff6d3d',
+        strokeColor: '#ff0000'
       },
       joy: {
-        0.45: 'rgb(0, 255, 0)',
-        0.8: 'rgb(0, 255, 0)'
+        fillColor: '#fff600',
+        strokeColor: '#e2dd36'
       },
       fear: {
-        0.9: 'rgb(0, 0, 255)',
-        1.0: 'rgb(0, 0, 255)'
+        fillColor: '#00d8ff',
+        strokeColor: '#23b7d1'
       },
       determination: {
-        0.45: 'rgb(255, 255, 0)',
-        0.8: 'rgb(255, 255, 0)'
+        fillColor: '#19ff00',
+        strokeColor: '#2fd81c'
       }
     };
 
@@ -44,12 +44,6 @@ angular.module('ngEuroPraporApp')
         minZoomLevel: 2,
         maxZoomLevel: 15
       });
-
-      for (var layer in layersData) {
-        var layerData = layersData[layer];
-
-        layers[layer] = createLayer(layer, emotionMap, OSMLayer, layersColors[layer]);
-      }
 
       // try cache before loading from remote resource
       cacheRead1 = new OpenLayers.Control.CacheRead({
@@ -94,17 +88,43 @@ angular.module('ngEuroPraporApp')
       // set initial zoom level
       emotionMap.zoomToMaxExtent();
 
+      // set initial map center
+      emotionMap.setCenter(new OpenLayers.LonLat(-78271.516953204, 5518141.9451953));
+
       // add cache controllers & other controls
       emotionMap.addControls([cacheRead1, cacheRead2, cacheWrite,
-        touchNavigation, zoom]);
+        touchNavigation, zoom, new OpenLayers.Control.LayerSwitcher()]);
 
-      for (var layer in layersData) {
-        var layerData = layersData[layer];
-
-        emotionMap.addLayers([layers[layer]]);
+      for (var layerName in layersData) {
+        var layerData = layersData[layerName].data,
+            layer = new OpenLayers.Layer.Vector(layerName + ' Layer');
 
         // put Open Layers ready data to the map
-        layers[layer].setDataSet(layerData);
+        for (var i = 0; i < layerData.length; i++) {
+          var checkin = layerData[i];
+
+          checkin.lonlat.transform(
+            new OpenLayers.Projection('EPSG:4326'),
+            emotionMap.getProjectionObject()
+          );
+
+          var pointGeometry = new OpenLayers.Geometry.Point(
+                checkin.lonlat.lon, checkin.lonlat.lat
+              ),
+              point = new OpenLayers.Feature.Vector(pointGeometry);
+
+          point.style = {
+            fillColor: layersColors[layerName].fillColor,
+            strokeColor: layersColors[layerName].strokeColor,
+            fillOpacity: 0.2,
+            strokeOpacity: 0.6,
+            pointRadius: checkin.count + 1
+          };
+
+          layer.addFeatures([point]);
+        }
+
+        emotionMap.addLayers([layer]);
       }
 
       // init cache controllers
@@ -112,24 +132,4 @@ angular.module('ngEuroPraporApp')
       cacheRead2.activate();
       cacheWrite.activate();
     });
-
-    function createLayer (name, map, baseLayer, color) {
-      var emotionLayer;
-
-      // create density map layer
-      emotionLayer = new OpenLayers.Layer.Heatmap(name + 'Layer', map, baseLayer,
-        {
-          visible: true,
-          radius: 10,
-          gradient: color,
-          opacity: 50
-        },
-        {
-          isBaseLayer: false,
-          projection: new OpenLayers.Projection('EPSG:4326')
-        }
-      );
-
-      return emotionLayer;
-    }
   });
