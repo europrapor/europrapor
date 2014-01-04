@@ -15,15 +15,15 @@ angular.module('ngEuroPraporApp')
       },
       joy: {
         fillColor: '#fff600',
-        strokeColor: '#e2dd36'
+        strokeColor: '#b85f00'
       },
       fear: {
         fillColor: '#00d8ff',
-        strokeColor: '#23b7d1'
+        strokeColor: '#006bb8'
       },
       determination: {
         fillColor: '#19ff00',
-        strokeColor: '#2fd81c'
+        strokeColor: '#00c210'
       }
     };
 
