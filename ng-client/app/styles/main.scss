@@ -14,6 +14,7 @@ $ui-white: #fafafa;
 
 body {
   background: $ui-white;
+  overflow-x: hidden;
 }
 
 nav {
@@ -228,4 +229,67 @@ nav {
 }
 .olControlAttribution {
   display: none !important;
+}
+
+/* Layers switcher styles */
+.layers-switcher {
+  $inner-color: #537cae;
+  $outer-color: #e5eeee;
+
+  width: 150px;
+  padding: 4px 0 4px 4px;
+  background: $outer-color;
+  border-radius: 0 0 0 4px;
+  font: bold 14px sans-serif;
+  color: #fff;
+  position: absolute;
+  top: 58px;
+  right: -150px;
+  z-index: 999;
+  transition: transform 200ms ease-in-out;
+
+  &.show {
+    transform: translate3d(-150px, 0, 0);
+  }
+
+  .switcher-inner {
+    background: $inner-color;
+    border-radius: 0 0 0 2px;
+    padding: 0 0 0 10px;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .layer {
+    padding: 5px 0;
+
+    span {
+      cursor: pointer;
+      text-transform: capitalize;
+
+      &:hover {
+        color: #eee;
+      }
+      &.inactive {
+        color: #88afd3;
+      }
+    }
+  }
+  .switch {
+    padding: 4px 0 4px 4px;
+    background: $outer-color;
+    position: absolute;
+    top: 0;
+    left: -30px;
+    border-radius: 4px 0 0 4px;
+    cursor: pointer;
+  }
+  .switch-inner {
+    width: 30px;
+    height: 22px;
+    background: $inner-color;
+    border-radius: 2px 0 0 2px;
+  }
 }

@@ -7,6 +7,9 @@ angular.module('ngEuroPraporApp')
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 2;
     OpenLayers.Util.onImageLoadErrorColor = 'transparent';
 
+    // number of layers in the view
+    $scope.numOfReadyLayers = 0;
+
     // layers colors config
     var layersColors = {
       anger: {
@@ -34,6 +37,9 @@ angular.module('ngEuroPraporApp')
           touchNavigation, zoom,
           emotionMap, OSMLayer,
           layers = {};
+
+      // store layers
+      $scope.layers = {};
 
       // create a map
       emotionMap = new OpenLayers.Map('layers-map', {
@@ -96,7 +102,7 @@ angular.module('ngEuroPraporApp')
 
       // add cache controllers & other controls
       emotionMap.addControls([cacheRead1, cacheRead2, cacheWrite,
-        touchNavigation, zoom, new OpenLayers.Control.LayerSwitcher()]);
+        touchNavigation, zoom]);
 
       for (var layerName in layersData) {
         var layerData = layersData[layerName].data,
@@ -128,6 +134,10 @@ angular.module('ngEuroPraporApp')
         }
 
         emotionMap.addLayers([layer]);
+
+        $scope.layers[layerName] = layer;
+
+        $scope.numOfReadyLayers++;
       }
 
       // init cache controllers
@@ -135,4 +145,47 @@ angular.module('ngEuroPraporApp')
       cacheRead2.activate();
       cacheWrite.activate();
     });
+  })
+  .directive('ngLayersSwitcher', function() {
+    return {
+      restrict: 'AE',
+      replace: true,
+      template: '<div class="layers-switcher" ng-class="{show: isSwitcherActive}">'+
+        '<div class="switcher-inner">'+
+        '<div class="switch" ng-click="toggleSwitcher()">'+
+        '<div class="switch-inner">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" width="26" height="22"><path d="M13 4l-8 4 8 4 8-4-8-4zm-6 6l-2 1 8 4 8-4-2-1-6 3-6-3zm0 3l-2 1 8 4 8-4-2-1-6 3-6-3z" fill="#fff"/></svg>'+
+        '</div>'+
+        '</div>'+
+        '<ul ng-repeat="name in layersNames">'+
+        '<li class="layer">'+
+        '<span ng-click="toggleLayer(name)" ng-class="{inactive: !layers[name].visibility}">'+
+        '{{name}}'+
+        '</span>'+
+        '</li>'+
+        '</ul>'+
+        '</div>'+
+        '</div>',
+      link: function ($scope, $element, $attrs) {
+        $scope.$watch('numOfReadyLayers', function() {
+          if ($scope.layers) {
+            $scope.layersNames = _.keys($scope.layers);
+
+            if ($scope.numOfReadyLayers === $scope.layersNames.length) {
+
+            }
+          }
+        });
+
+        $scope.isSwitcherActive = false;
+        $scope.toggleSwitcher = function() {
+          $scope.isSwitcherActive = !$scope.isSwitcherActive;
+        };
+        $scope.toggleLayer = function (name) {
+          var targetLayer = $scope.layers[name];
+
+          targetLayer.setVisibility(!targetLayer.visibility);
+        };
+      }
+    };
   });

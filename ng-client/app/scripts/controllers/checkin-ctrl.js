@@ -80,9 +80,9 @@ angular.module('ngEuroPraporApp')
   .directive('ngSlider', function() {
     var rangeSlider = function ($scope, $element, $attrs) {
       new SliderControl($element[0], 0, 10, {
-        label: $attrs.id.toUpperCase()
-      , initialValue: $scope.sliders[$attrs.id]
-      , onslide: function() {
+        label: $attrs.id.toUpperCase(),
+        initialValue: $scope.sliders[$attrs.id],
+        onslide: function() {
           $scope.sliders[$attrs.id] = this.getValue();
         }
       });
@@ -92,23 +92,23 @@ angular.module('ngEuroPraporApp')
   })
   .directive('ngLoader', function() {
     return {
-      restrict: 'AE'
-    , replace: true
-    , template: '<div class="overlay">' +
+      restrict: 'AE',
+      replace: true,
+      template: '<div class="overlay">'+
         '<i class="glyphicon glyphicon-refresh"></i>'+
         '<i class="glyphicon glyphicon-minus-sign"></i>'+
         '<i class="glyphicon glyphicon-globe"></i>'+
         '<i class="glyphicon glyphicon-time"></i>'+
         '<i class="glyphicon glyphicon-ok-circle"></i>'+
         '<i class="glyphicon glyphicon-warning-sign"></i>'+
-        '</div>'
-    , link: function ($scope, $element, $attrs) {
-      $scope.$watch('loading', function ($val) {
-        if ($val)
-          $element.fadeIn(200);
-        else
-          $element.fadeOut(200);
-      });
-    }
+        '</div>',
+      link: function ($scope, $element, $attrs) {
+        $scope.$watch('loading', function ($val) {
+          if ($val)
+            $element.fadeIn(200);
+          else
+            $element.fadeOut(200);
+        });
+      }
     };
   });
