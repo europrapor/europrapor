@@ -4,6 +4,9 @@
 
 angular.module('ngEuroPraporApp')
   .controller('DensityMapCtrl', function ($scope, $timeout, DensityMap) {
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 2;
+    OpenLayers.Util.onImageLoadErrorColor = 'transparent';
+
     // fetch geodata
     DensityMap.get(function (densityData) {
       var cacheRead1, cacheRead2, cacheWrite,

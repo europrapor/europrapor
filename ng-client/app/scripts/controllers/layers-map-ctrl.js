@@ -4,6 +4,9 @@
 
 angular.module('ngEuroPraporApp')
   .controller('LayersMapCtrl', function ($scope, LayersMap) {
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 2;
+    OpenLayers.Util.onImageLoadErrorColor = 'transparent';
+
     // layers colors config
     var layersColors = {
       anger: {
@@ -118,7 +121,7 @@ angular.module('ngEuroPraporApp')
             strokeColor: layersColors[layerName].strokeColor,
             fillOpacity: 0.2,
             strokeOpacity: 0.6,
-            pointRadius: checkin.count + 1
+            pointRadius: checkin.count + 2
           };
 
           layer.addFeatures([point]);
