@@ -76,12 +76,12 @@ nav {
 
 /* use bg-image gradients */
 .range-slider {
-  background: url(../images/emotion-gradient.png) repeat-y;
+  background: inline-image('../images/emotion-gradient.png') repeat-y;
   background-size: 100%;
 
   /* privacy slider styles */
   &.privacy {
-    background: url(../images/privacy-gradient.png) repeat-y;
+    background: inline-image('../images/privacy-gradient.png') repeat-y;
     background-size: 100%;
   }
 }
@@ -289,7 +289,14 @@ nav {
   .switch-inner {
     width: 30px;
     height: 22px;
-    background: $inner-color;
+    background-image: inline-image('../images/layers-icon.png');
+    background-color: $inner-color;
+    background-repeat: no-repeat;
     border-radius: 2px 0 0 2px;
+  }
+}
+html.svg {
+  .switch-inner {
+    background-image: inline-image('../images/layers-icon.svg');
   }
 }
