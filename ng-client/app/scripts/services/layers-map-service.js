@@ -24,7 +24,7 @@ angular.module('ngEuroPraporApp')
             for (var j = 0; j < data.length; j++) {
               for (var k = 0; k < densityData.length; k++) {
                 if (data[j].id === densityData[k].id) {
-                  var mergedPoint = densityData[k];
+                  var mergedPoint = _.clone(densityData[k]);
 
                   mergedPoint.heat = data[j].heat;
 
