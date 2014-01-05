@@ -82,6 +82,9 @@ angular.module('ngEuroPraporApp')
       // set initial zoom level
       densityMap.zoomToMaxExtent();
 
+      // set initial map center
+      densityMap.setCenter(new OpenLayers.LonLat(-78271.516953204, 5518141.9451953));
+
       // add cache controllers & other controls
       densityMap.addControls([cacheRead1, cacheRead2, cacheWrite,
         touchNavigation, zoom]);
