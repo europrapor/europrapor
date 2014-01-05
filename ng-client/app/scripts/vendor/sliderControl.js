@@ -190,7 +190,7 @@
     defaults: {
       // functionality
       easing: 'ease-out',
-      easingDuration: 150,
+      easingDuration: 100,
       label: false, // show labels within slider: true/false, labels[], or '|' separated string
       slideToClick: true, // slide to clicks anywhere on slider
       enableSnap: true, // snap to value after user finishes sliding
