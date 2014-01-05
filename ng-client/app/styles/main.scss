@@ -12,6 +12,15 @@ $ui-white: #fafafa;
 $ui-hover: #ddd;
 $ui-inactive: #88afd3;
 
+/* ui elements size */
+$header-size: 50px;
+$header-nav-size: 24px;
+$check-in-size: 50px;
+$check-in-font-size: $check-in-size / 2 + 1;
+$slider-size: 42px;
+$thumb-size: 46px;
+$thumb-mark-size: 4px;
+
 @import 'sass-bootstrap/lib/bootstrap';
 
 body {
@@ -30,11 +39,9 @@ nav {
 
 /* Header bar styles */
 .app-header {
-  $size: 50px;
-
   background: $ui-blue;
   color: $ui-white;
-  height: $size;
+  height: $header-size;
   text-align: center;
   position: relative;
 
@@ -45,11 +52,11 @@ nav {
   .next { float: right; }
 
   .glyphicon {
-    font-size: 24px;
+    font-size: $header-nav-size;
     cursor: pointer;
-    height: $size;
-    width: $size;
-    line-height: 48px;
+    height: $header-size;
+    width: $header-size;
+    line-height: $header-nav-size * 2;
     top: 0;
     position: relative;
     z-index: 9;
@@ -72,6 +79,8 @@ nav {
 
 .emotion-form {
   padding: 3px 10px;
+  margin: 0 auto;
+  max-width: 640px;
 }
 
 /* Range slider styles */
@@ -103,9 +112,6 @@ nav {
 }
 
 .range-slider {
-  $slider-size: 42px;
-  $thumb-size: 46px;
-
   height: $slider-size;
   margin: 10px 0;
   position: relative;
@@ -129,8 +135,6 @@ nav {
 
     /* visible thumb */
     &::before {
-      $thumb-mark-size: 4px;
-
       content: '';
       display: block;
       position: absolute;
@@ -146,27 +150,26 @@ nav {
   /* slider label */
   .sliderLabelsDiv {
     font-weight: bold;
-    font-size: 28px;
+    font-size: 24px;
     color: rgba(white, .8);
     text-align: center;
     height: 100%;
+    line-height: $slider-size;
   }
 }
 
 /* Check-in button */
 .check-in {
-  $size: 50px;
-
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background: $ui-blue;
   color: $ui-white;
   width: 100%;
-  height: $size;
+  height: $check-in-size;
   text-align: center;
-  font-size: 26px;
+  font-size: $check-in-font-size;
   font-weight: bold;
-  line-height: $size;
+  line-height: $check-in-size;
   cursor: pointer;
 
   &:hover {
@@ -312,5 +315,57 @@ nav {
 html.svg {
   .switch-inner {
     background-image: inline-image('../images/layers-icon.svg');
+  }
+}
+
+@media screen and (max-device-height: 640px) and (orientation: landscape) {
+  $header-size-shrink: $header-size / 2;
+  $header-nav-size-shrink: $header-nav-size / 2;
+  $check-in-size-shrink: $check-in-size / 2;
+  $check-in-font-size-shrink: $check-in-size-shrink / 2 + 1;
+  $slider-size-shrink: $slider-size / 2;
+  $thumb-size-shrink: $thumb-size / 2;
+  $thumb-mark-size-shrink: $thumb-mark-size;
+
+  .app-header {
+    height: $header-size-shrink;
+
+    .glyphicon {
+      height: $header-size-shrink;
+      width: $header-size-shrink;
+      font-size: $header-nav-size-shrink;
+      line-height: $header-nav-size-shrink * 2;
+    }
+    .current {
+      font-size: 14px;
+      line-height: 24px;
+    }
+  }
+  .emotion-form {
+    margin: 0 auto $check-in-size-shrink;
+  }
+  .check-in {
+    height: $check-in-size-shrink;
+    line-height: $check-in-size-shrink;
+    font-size: $check-in-font-size-shrink;
+  }
+  .range-slider {
+    height: $slider-size-shrink;
+
+    .sliderThumb {
+      width: $thumb-size-shrink;
+      height: $thumb-size-shrink;
+      top: ($slider-size-shrink - $thumb-size-shrink) / 2;
+
+      &::before {
+        height: $thumb-size-shrink;
+        width: $thumb-mark-size-shrink;
+        left: ($thumb-size-shrink - $thumb-mark-size-shrink) / 2;
+      }
+    }
+    .sliderLabelsDiv {
+      font-size: 12px;
+      line-height: 22px;
+    }
   }
 }
