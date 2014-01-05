@@ -3,9 +3,9 @@
 angular.module('ngEuroPraporApp')
   .controller('HeaderCtrl', function ($scope, $location) {
     $scope.availableTitles = {
-      '/': 'Make check-in',
-      '/density-map': 'Density map',
-      '/layers-map': 'Emotion map'
+      '/': 'TITLE_CHECK-IN',
+      '/density-map': 'TITLE_DENSITY-MAP',
+      '/layers-map': 'TITLE_EMO_MAP'
     };
     $scope.location = $location;
     $scope.nav = {

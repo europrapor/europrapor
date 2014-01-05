@@ -6,11 +6,11 @@ angular.module('ngEuroPraporApp')
   .controller('CheckinCtrl', function ($scope, $timeout, Checkin) {
 
     $scope.sliders = {
-        anger:          5
-      , joy:            5
-      , determination:  5
-      , fear:           5
-      , privacy:        10
+      'SLIDER_ANGER': 5,
+      'SLIDER_JOY': 5,
+      'SLIDER_DETERM': 5,
+      'SLIDER_FEAR': 5,
+      'SLIDER_PRIVACY': 10
     };
 
     $scope.performCheckin = function() {
@@ -27,8 +27,8 @@ angular.module('ngEuroPraporApp')
 
         checkin = new Checkin({
           position: $scope.position,
-          mental_state: _.omit($scope.sliders, 'privacy'),
-          privacy: $scope.sliders.privacy
+          mental_state: _.omit($scope.sliders, 'SLIDER_PRIVACY'),
+          privacy: $scope.sliders.SLIDER_PRIVACY
         });
 
         checkin.$save()
@@ -80,7 +80,7 @@ angular.module('ngEuroPraporApp')
   .directive('ngSlider', function() {
     var rangeSlider = function ($scope, $element, $attrs) {
       new SliderControl($element[0], 0, 10, {
-        label: $attrs.id.toUpperCase(),
+        label: $attrs.label.toUpperCase(),
         initialValue: $scope.sliders[$attrs.id],
         onslide: function() {
           $scope.sliders[$attrs.id] = this.getValue();

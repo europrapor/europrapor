@@ -7,6 +7,9 @@ angular.module('ngEuroPraporApp')
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 2;
     OpenLayers.Util.onImageLoadErrorColor = 'transparent';
 
+    // list of emotions layers
+    $scope.emos = ['anger', 'joy', 'fear', 'determination'];
+
     // number of layers in the view
     $scope.numOfReadyLayers = 0;
 
@@ -31,7 +34,7 @@ angular.module('ngEuroPraporApp')
     };
 
     // fetch emotions maps data
-    LayersMap.get(['anger', 'joy', 'fear', 'determination'],
+    LayersMap.get($scope.emos,
       function (layersData) {
       var cacheRead1, cacheRead2, cacheWrite,
           touchNavigation, zoom,
@@ -155,10 +158,10 @@ angular.module('ngEuroPraporApp')
         '<div class="switch" ng-click="toggleSwitcher()">'+
         '<div class="switch-inner"></div>'+
         '</div>'+
-        '<ul ng-repeat="name in layersNames">'+
+        '<ul ng-repeat="(name, locale) in layersNamesLocale">'+
         '<li class="layer">'+
         '<span ng-click="toggleLayer(name)" ng-class="{inactive: !layers[name].visibility}">'+
-        '{{name}}'+
+        '{{locale | translate}}'+
         '</span>'+
         '</li>'+
         '</ul>'+
@@ -171,6 +174,13 @@ angular.module('ngEuroPraporApp')
 
             if ($scope.numOfReadyLayers === $scope.layersNames.length) {
 
+              // hardcoded!!!
+              $scope.layersNamesLocale = {};
+
+              $scope.layersNamesLocale[$scope.emos[0]] = 'SLIDER_ANGER';
+              $scope.layersNamesLocale[$scope.emos[1]] = 'SLIDER_JOY';
+              $scope.layersNamesLocale[$scope.emos[2]] = 'SLIDER_FEAR';
+              $scope.layersNamesLocale[$scope.emos[3]] = 'SLIDER_DETERM';
             }
           }
         });
