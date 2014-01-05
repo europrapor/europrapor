@@ -8,6 +8,12 @@ angular.module('ngEuroPraporApp', [
   'pascalprecht.translate'
 ])
   .config(function ($routeProvider, $translateProvider) {
+    var availableLocales = {
+          en: 'en',
+          ru: 'ru',
+          uk: 'uk'
+        },
+        nav, locale, prefferedLocale;
 
     // setup router
     $routeProvider
@@ -29,7 +35,7 @@ angular.module('ngEuroPraporApp', [
 
     // setup localization
     $translateProvider
-      .translations('en', {
+      .translations(availableLocales.en, {
         'BTN_CHECK-IN': 'Check-in',
 
         'TITLE_CHECK-IN': 'Make check-in',
@@ -42,7 +48,7 @@ angular.module('ngEuroPraporApp', [
         'SLIDER_FEAR': 'fear',
         'SLIDER_PRIVACY': 'privacy'
       })
-      .translations('ru', {
+      .translations(availableLocales.ru, {
         'BTN_CHECK-IN': 'Чекин',
 
         'TITLE_CHECK-IN': 'Чекин',
@@ -55,7 +61,7 @@ angular.module('ngEuroPraporApp', [
         'SLIDER_FEAR': 'страх',
         'SLIDER_PRIVACY': 'приватность'
       })
-      .translations('ua', {
+      .translations(availableLocales.uk, {
         'BTN_CHECK-IN': 'Чекін',
 
         'TITLE_CHECK-IN': 'Чекін',
@@ -69,5 +75,28 @@ angular.module('ngEuroPraporApp', [
         'SLIDER_PRIVACY': 'конфіденційність'
       });
 
-    $translateProvider.preferredLanguage('en');
+    /*
+     * Dumb locale sniffing,
+     * better use request-required Accept-Language header sniffing?
+     */
+    nav = window.navigator;
+    locale = ((
+      nav.language ||
+      nav.browserLanguage ||
+      nav.systemLanguage ||
+      nav.userLanguage
+    ) || '').split('-').join('_');
+
+    for (var localeName in availableLocales) {
+      var availableLocale = availableLocales[localeName];
+
+      if (!!locale.match(availableLocale)) {
+        prefferedLocale = availableLocale;
+
+        $translateProvider.preferredLanguage(prefferedLocale);
+
+        return;
+      }
+    }
+
   });
