@@ -9,6 +9,8 @@ $safe: #4cdb30;
 /* ui colors */
 $ui-blue: #2689C0;
 $ui-white: #fafafa;
+$ui-hover: #ddd;
+$ui-inactive: #88afd3;
 
 @import 'sass-bootstrap/lib/bootstrap';
 
@@ -51,10 +53,10 @@ nav {
     top: 0;
     position: relative;
     z-index: 9;
+    color: $ui-white;
 
-    &,
     &:hover {
-      color: $ui-white;
+      color: $ui-hover;
       text-decoration: none;
     }
   }
@@ -166,6 +168,10 @@ nav {
   font-weight: bold;
   line-height: $size;
   cursor: pointer;
+
+  &:hover {
+    color: $ui-hover;
+  }
 }
 
 /* Overlay loader */
@@ -278,10 +284,10 @@ nav {
       text-transform: capitalize;
 
       &:hover {
-        color: #eee;
+        color: $ui-hover;
       }
       &.inactive {
-        color: #88afd3;
+        color: $ui-inactive;
       }
     }
   }
