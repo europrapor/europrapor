@@ -4,7 +4,7 @@
     use Ratchet\WebSocket\WsServer;
     use Ws\RealTime;
 
-    require dirname(__DIR__) . '/vendor/autoload.php';
+    require dirname(__FILE__) . '/vendor/autoload.php';
 
     $realtime = new RealTime();
 
