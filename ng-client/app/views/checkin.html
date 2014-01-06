@@ -1,5 +1,5 @@
 <div class="emotion-form">
-  <div ng-repeat="(id, value) in sliders" ng-class="{privacy: id == 'SLIDER_PRIVACY'}" class="range-slider" id="{{id}}" data-label="{{id | translate}}" ng-slider></div>
+  <div ng-repeat="(id, value) in sliders" ng-class="{privacy: id == 'privacy'}" class="range-slider" id="{{id}}" data-label="{{value.name | translate}}" ng-slider></div>
 </div>
 
 <div class="check-in" ng-click="performCheckin()">{{'BTN_CHECK-IN' | translate}}</div>
