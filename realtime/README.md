@@ -1,4 +1,4 @@
-Europrapor client
+Europrapor WebSocket checkin server
 ==========
 
 Tech overview
