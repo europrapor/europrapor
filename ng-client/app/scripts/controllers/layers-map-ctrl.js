@@ -130,7 +130,7 @@ angular.module('ngEuroPraporApp')
             strokeColor: layersColors[layerName].strokeColor,
             fillOpacity: 0.2,
             strokeOpacity: 0.6,
-	    pointRadius: checkin.count > 0 && checkin.count + 2 || 0
+      	    pointRadius: checkin.count > 0 && checkin.count + 2 || 0
           };
 
           layer.addFeatures([point]);

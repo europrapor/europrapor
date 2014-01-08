@@ -77,7 +77,8 @@ nav {
   }
 }
 
-.emotion-form {
+.emotion-form,
+.content.info {
   padding: 3px 10px;
   margin: 0 auto;
   max-width: 640px;
@@ -317,6 +318,8 @@ html.svg {
     background-image: inline-image('../images/layers-icon.svg');
   }
 }
+
+/* Info section styles */
 
 @media screen and (max-device-height: 640px) and (orientation: landscape) {
   $header-size-shrink: $header-size / 2;

@@ -29,6 +29,10 @@ angular.module('ngEuroPraporApp', [
         templateUrl: 'views/layers-map.html',
         controller: 'LayersMapCtrl'
       })
+      .when('/info', {
+        templateUrl: 'views/info.html',
+        controller: 'InfoCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -38,6 +42,7 @@ angular.module('ngEuroPraporApp', [
       .translations(availableLocales.en, {
         'BTN_CHECK-IN': 'Check-in',
 
+        'TITLE_INFO': 'Info',
         'TITLE_CHECK-IN': 'Make check-in',
         'TITLE_DENSITY-MAP': 'Density map',
         'TITLE_EMO_MAP': 'Emotion map',
@@ -51,6 +56,7 @@ angular.module('ngEuroPraporApp', [
       .translations(availableLocales.ru, {
         'BTN_CHECK-IN': 'Чекин',
 
+        'TITLE_INFO': 'Информация',
         'TITLE_CHECK-IN': 'Чекин',
         'TITLE_DENSITY-MAP': 'Карта плотности',
         'TITLE_EMO_MAP': 'Карта настроения',
@@ -64,6 +70,7 @@ angular.module('ngEuroPraporApp', [
       .translations(availableLocales.uk, {
         'BTN_CHECK-IN': 'Чекін',
 
+        'TITLE_INFO': 'Інформація',
         'TITLE_CHECK-IN': 'Чекін',
         'TITLE_DENSITY-MAP': 'Карта густини',
         'TITLE_EMO_MAP': 'Карта настрію',

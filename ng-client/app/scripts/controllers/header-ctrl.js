@@ -3,6 +3,7 @@
 angular.module('ngEuroPraporApp')
   .controller('HeaderCtrl', function ($scope, $location) {
     $scope.availableTitles = {
+      '/info': 'TITLE_INFO',
       '/': 'TITLE_CHECK-IN',
       '/density-map': 'TITLE_DENSITY-MAP',
       '/layers-map': 'TITLE_EMO_MAP'
@@ -27,7 +28,7 @@ angular.module('ngEuroPraporApp')
       next = URLs[current + 1];
 
       $scope.nav.prev = {
-        enabled: !prev,
+        enabled: path == '/' ? !prev : prev,
         url: '#' + prev || ''
       };
       $scope.nav.next = {
