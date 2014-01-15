@@ -106,7 +106,7 @@ angular.module('ngEuroPraporApp', [
       if (!!locale.match(availableLocale)) {
         prefferedLocale = availableLocale;
 
-        $translateProvider.preferredLanguage('uk');
+        $translateProvider.preferredLanguage(prefferedLocale);
 
         return;
       }
