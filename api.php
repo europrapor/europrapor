@@ -3,16 +3,13 @@
 $maps = ['joy', 'fear', 'determination', 'anger'];
 $response = '';
 $input = file_get_contents('php://input');
+$select_timespan = '04:00:00';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (preg_match('/^\/map\/(\w+)$/', $_SERVER['SCRIPT_NAME'], $matches) && in_array($matches[1], $maps)) {
         include('mysql_pdo_conn.php');
-        $sql = 'SELECT id, privacy, joy, fear, determination, anger FROM beta_rows';
+        $sql = 'SELECT id, privacy, joy, fear, determination, anger FROM beta_rows WHERE time > ADDTIME(NOW(), \'-'.$select_timespan.'\')';
         $rows = $conn->query($sql);
-        if (!$rows) {
-            echo 'An SQL error occured.\n';
-            exit(1);
-        }
 
         $response = array();
         while ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
@@ -37,17 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             // 0.00015 ~ 15 meters
             $sql = 'SELECT r1.id, r1.lt, r1.lg, r1.privacy
                 FROM beta_rows AS r1, beta_rows AS r2
-                WHERE r1.lt <= (r2.lt + 0.00015)
+                WHERE r1.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
+                AND r2.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
+                AND r1.lt <= (r2.lt + 0.00015)
                 AND r1.lt >= (r2.lt - 0.00015)
                 AND r1.lg <= (r2.lg + 0.00015)
                 AND r1.lg >= (r2.lg - 0.00015)
                 GROUP BY r1.id
                 HAVING COUNT(r2.id) >= r1.privacy;';
             $rows = $conn->query($sql);
-            if (!$rows) {
-                echo 'An SQL error occured.\n';
-                exit(1);
-            }
 
             $response = array();
             while ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
@@ -64,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             break;
     }
 
-    if ($response) {
+    if (is_array($response)) {
         header('Content-type: application/json');
         header("HTTP/1.0 200 OK");
         echo json_encode($response);
@@ -86,6 +81,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ','.strval($mental_state['anger']).')';
 
     if ($conn->exec($sql)) {
+        $lastId = $conn->lastInsertId();
+
+        $sql = 'SELECT r1.id, r1.lt, r1.lg, r1.privacy
+                FROM beta_rows AS r1, beta_rows AS r2
+                WHERE r1.id = '.$lastId.'
+                AND r2.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
+                AND r1.lt <= (r2.lt + 0.00015)
+                AND r1.lt >= (r2.lt - 0.00015)
+                AND r1.lg <= (r2.lg + 0.00015)
+                AND r1.lg >= (r2.lg - 0.00015)
+                GROUP BY r1.id
+                HAVING COUNT(r2.id) >= r1.privacy;';
+        $rows = $conn->query($sql);
+        if ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
+            $checkin = [
+                'id' => intval($row['id']),
+                'position' => [
+                    'lt' => doubleval($row['lt']),
+                    'lg' => doubleval($row['lg'])
+                ]
+            ];
+
+            $response = array($checkin);
+            $context = new ZMQContext();
+            $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my realtime');
+            $socket->connect("tcp://localhost:5555");
+
+            $socket->send(json_encode($response));
+        }
+
         header("HTTP/1.0 200 OK");
     } else {
         header("HTTP/1.0 400 Bad Request");

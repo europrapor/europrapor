@@ -1,5 +1,6 @@
 ## Server specific
 mysql_*
+~pull.sh
 
 #################
 ## Eclipse
@@ -216,3 +217,14 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+#############
+## php composer
+#############
+
+vendor/
+composer.lock

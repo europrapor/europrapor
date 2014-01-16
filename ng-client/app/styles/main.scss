@@ -1,0 +1,375 @@
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+
+/* emotion form range slider colors */
+$low: #72d0ff;
+$high: #f30;
+$danger: $high;
+$safe: #4cdb30;
+
+/* ui colors */
+$ui-blue: #2689C0;
+$ui-white: #fafafa;
+$ui-hover: #ddd;
+$ui-inactive: #88afd3;
+
+/* ui elements size */
+$header-size: 50px;
+$header-nav-size: 24px;
+$check-in-size: 50px;
+$check-in-font-size: $check-in-size / 2 + 1;
+$slider-size: 42px;
+$thumb-size: 46px;
+$thumb-mark-size: 4px;
+
+@import 'sass-bootstrap/lib/bootstrap';
+
+body {
+  background: $ui-white;
+  overflow-x: hidden;
+}
+
+nav {
+  ul,
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+/* Header bar styles */
+.app-header {
+  background: $ui-blue;
+  color: $ui-white;
+  height: $header-size;
+  text-align: center;
+  position: relative;
+
+  .navigation,
+  ul { height: 100%; }
+
+  .prev { float: left; }
+  .next { float: right; }
+
+  .glyphicon {
+    font-size: $header-nav-size;
+    cursor: pointer;
+    height: $header-size;
+    width: $header-size;
+    line-height: $header-nav-size * 2;
+    top: 0;
+    position: relative;
+    z-index: 9;
+    color: $ui-white;
+
+    &:hover {
+      color: $ui-hover;
+      text-decoration: none;
+    }
+  }
+
+  .current {
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 50px;
+    width: 100%;
+  }
+}
+
+.emotion-form,
+.content.info {
+  padding: 3px 10px;
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+/* Range slider styles */
+
+/* use bg-image gradients */
+.range-slider {
+  background: inline-image('../images/emotion-gradient.png') repeat-y;
+  background-size: 100%;
+
+  /* privacy slider styles */
+  &.privacy {
+    background: inline-image('../images/privacy-gradient.png') repeat-y;
+    background-size: 100%;
+  }
+}
+
+/* use CSS gradients if supported */
+.cssgradients {
+  .range-slider {
+    background: linear-gradient(bottom, rgba(white, .1), rgba(black, .1)),
+                linear-gradient(left, $low, $high);
+
+    /* privacy slider styles */
+    &.privacy {
+      background: linear-gradient(bottom, rgba(white, .1), rgba(black, .1)),
+                  linear-gradient(left, $danger, $safe);
+    }
+  }
+}
+
+.range-slider {
+  height: $slider-size;
+  margin: 10px 0;
+  position: relative;
+  border-radius: $slider-size / 2;
+  box-shadow: inset 0 1px 1px rgba(black, .3),
+              inset 0 1px 3px rgba(black, .2);
+
+  -webkit-tap-highlight-color: transparent;
+
+  /*
+   * slider thumb
+   *
+   * touch area is an empty square which includes smaller
+   * visible thumb
+  */
+  .sliderThumb {
+    width: $thumb-size;
+    height: $thumb-size;
+    top: ($slider-size - $thumb-size) / 2;
+    position: absolute;
+
+    /* visible thumb */
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      height: $thumb-size;
+      width: $thumb-mark-size;
+      background: #000;
+      left: ($thumb-size - $thumb-mark-size) / 2;
+      border-radius: 2px;
+      box-shadow: 0 0 2px #666;
+    }
+  }
+
+  /* slider label */
+  .sliderLabelsDiv {
+    font-weight: bold;
+    font-size: 24px;
+    color: rgba(white, .8);
+    text-align: center;
+    height: 100%;
+    line-height: $slider-size;
+  }
+}
+
+/* Check-in button */
+.check-in {
+  position: fixed;
+  bottom: 0;
+  background: $ui-blue;
+  color: $ui-white;
+  width: 100%;
+  height: $check-in-size;
+  text-align: center;
+  font-size: $check-in-font-size;
+  font-weight: bold;
+  line-height: $check-in-size;
+  cursor: pointer;
+
+  &:hover {
+    color: $ui-hover;
+  }
+}
+
+/* Overlay loader */
+.overlay {
+  position: absolute;
+  background: rgba(black, .6);
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100%;
+  z-index: 9;
+
+  .glyphicon {
+    display: none;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+  }
+
+  &.spinner .glyphicon-refresh {
+    display: block;
+    color: $ui-white;
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
+    animation: spin 1200ms linear infinite;
+  }
+  &.success .glyphicon-ok-circle {
+    display: block;
+    color: lighten($safe, 10%);
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
+  }
+  &.error .glyphicon-warning-sign {
+    display: block;
+    color: lighten($high, 10%);
+    font-size: 120px;
+    width: 150px;
+    height: 120px;
+    text-align: center;
+  }
+  &.denied .glyphicon-minus-sign,
+  &.unavailable .glyphicon-globe,
+  &.timeout .glyphicon-time {
+    display: block;
+    color: lighten($high, 10%);
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Loader animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Maps styles */
+.map {
+  width: 100%;
+}
+.olControlAttribution {
+  display: none !important;
+}
+
+/* Layers switcher styles */
+.layers-switcher {
+  $inner-color: #537cae;
+  $outer-color: #e5eeee;
+
+  width: 150px;
+  padding: 4px 0 4px 4px;
+  background: $outer-color;
+  border-radius: 0 0 0 4px;
+  font: bold 14px sans-serif;
+  color: #fff;
+  position: absolute;
+  top: 58px;
+  right: -150px;
+  z-index: 999;
+  transition: transform 200ms ease-in-out;
+
+  &.show {
+    transform: translate3d(-150px, 0, 0);
+  }
+
+  .switcher-inner {
+    background: $inner-color;
+    border-radius: 0 0 0 2px;
+    padding: 0 0 0 10px;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .layer {
+    padding: 5px 0;
+
+    span {
+      cursor: pointer;
+      text-transform: capitalize;
+
+      &:hover {
+        color: $ui-hover;
+      }
+      &.inactive {
+        color: $ui-inactive;
+      }
+    }
+  }
+  .switch {
+    padding: 4px 0 4px 4px;
+    background: $outer-color;
+    position: absolute;
+    top: 0;
+    left: -30px;
+    border-radius: 4px 0 0 4px;
+    cursor: pointer;
+  }
+  .switch-inner {
+    width: 30px;
+    height: 22px;
+    background-image: inline-image('../images/layers-icon.png');
+    background-color: $inner-color;
+    background-repeat: no-repeat;
+    border-radius: 2px 0 0 2px;
+  }
+}
+html.svg {
+  .switch-inner {
+    background-image: inline-image('../images/layers-icon.svg');
+  }
+}
+
+/* Info section styles */
+
+@media screen and (max-device-height: 640px) and (orientation: landscape) {
+  $header-size-shrink: $header-size / 2;
+  $header-nav-size-shrink: $header-nav-size / 2;
+  $check-in-size-shrink: $check-in-size / 2;
+  $check-in-font-size-shrink: $check-in-size-shrink / 2 + 1;
+  $slider-size-shrink: $slider-size / 2;
+  $thumb-size-shrink: $thumb-size / 2;
+  $thumb-mark-size-shrink: $thumb-mark-size;
+
+  .app-header {
+    height: $header-size-shrink;
+
+    .glyphicon {
+      height: $header-size-shrink;
+      width: $header-size-shrink;
+      font-size: $header-nav-size-shrink;
+      line-height: $header-nav-size-shrink * 2;
+    }
+    .current {
+      font-size: 14px;
+      line-height: 24px;
+    }
+  }
+  .emotion-form {
+    margin: 0 auto $check-in-size-shrink;
+  }
+  .check-in {
+    height: $check-in-size-shrink;
+    line-height: $check-in-size-shrink;
+    font-size: $check-in-font-size-shrink;
+  }
+  .range-slider {
+    height: $slider-size-shrink;
+
+    .sliderThumb {
+      width: $thumb-size-shrink;
+      height: $thumb-size-shrink;
+      top: ($slider-size-shrink - $thumb-size-shrink) / 2;
+
+      &::before {
+        height: $thumb-size-shrink;
+        width: $thumb-mark-size-shrink;
+        left: ($thumb-size-shrink - $thumb-mark-size-shrink) / 2;
+      }
+    }
+    .sliderLabelsDiv {
+      font-size: 12px;
+      line-height: 22px;
+    }
+  }
+}

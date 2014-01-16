@@ -1,0 +1,15 @@
+<div ng-controller="HeaderCtrl">
+  <header class="app-header">
+    <nav class="navigation">
+      <ul>
+        <li class="prev" ng-class="{hidden: location.path() == '/info' ? true : false}">
+          <a href="{{nav.prev.url}}" ng-class="{'glyphicon-chevron-left': nav.prev.enabled, 'glyphicon-info-sign': !nav.prev.enabled}" class="glyphicon"></a>
+        </li>
+        <li class="current">{{title | translate}}</li>
+        <li class="next" ng-class="{hidden: nav.next.enabled}">
+          <a href="{{nav.next.url}}" class="glyphicon glyphicon-chevron-right"></a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</div>
