@@ -5,10 +5,14 @@ from tornado.web import RequestHandler
 class MapsHandler(RequestHandler):
 
     def get(self):
-        self.write(json_encode([{'map_id': 'anger'},
-                                {'map_id': 'determination'},
-                                {'map_id': 'fear'},
-                                {'map_id': 'joy'}]))
+        if self.request.uri == '/maps':
+            maps = [{'map_id': 'anger'},
+                    {'map_id': 'determination'},
+                    {'map_id': 'fear'},
+                    {'map_id': 'joy'}]
+            self.write(json_encode(maps))
+        else:
+            self.write(json_encode([]))
 
 
 class AngerMapHandler(RequestHandler):

@@ -11,6 +11,10 @@ class TestMaps(unittest.TestCase):
                          [{'map_id': 'anger'}, {'map_id': 'determination'},
                           {'map_id': 'fear'}, {'map_id': 'joy'}])
 
+    def test_map(self):
+        response = get('http://localhost:8000/map')
+        self.assertEqual(json_decode(response.text), [])
+
     def test_anger_map(self):
         response = get('http://localhost:8000/map/anger')
         self.assertEqual(json_decode(response.text), [])

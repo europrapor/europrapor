@@ -14,6 +14,7 @@ def main():
     routes = (
         (r'/check-in', CheckinHandler),
         (r'/maps', MapsHandler),
+        (r'/map', MapsHandler),
         (r'/map/anger', AngerMapHandler),
         (r'/map/determination', DeterminationMapHandler),
         (r'/map/fear', FearMapHandler),
