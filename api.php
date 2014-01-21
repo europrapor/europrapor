@@ -92,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 AND r1.lg <= (r2.lg + 0.00015)
                 AND r1.lg >= (r2.lg - 0.00015)
                 GROUP BY r1.id
-                HAVING COUNT(r2.id) >= r1.privacy;';
+                HAVING COUNT(r2.id) >= r1.privacy
+                LIMIT 1;';
         $rows = $conn->query($sql);
         if ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
             $checkin = [
