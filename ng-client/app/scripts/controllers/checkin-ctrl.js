@@ -3,7 +3,13 @@
 'use strict';
 
 angular.module('ngEuroPraporApp')
-  .controller('CheckinCtrl', function ($scope, $timeout, Checkin) {
+  .controller('CheckinCtrl', function ($scope, $timeout, $cookies, Checkin) {
+    var checkinToken = $cookies.api_key,
+	params = {};
+
+    if (checkinToken) {
+      params.api_key = checkinToken;
+    }
 
     $scope.sliders = {
       anger: {
@@ -55,7 +61,7 @@ angular.module('ngEuroPraporApp')
           privacy: $scope.sliders.privacy.value
         });
 
-        checkin.$save()
+	checkin.$save(params)
           .then(function (res) {
             // SUCCESS
             $scope.loaderIcon = 'success';
