@@ -38,25 +38,37 @@ class MapsHandler(RequestHandler):
             self.write(json_encode(checkins))
 
 
-class AngerMapHandler(RequestHandler):
+class EmotionalMapHandler(RequestHandler):
 
     def get(self):
-        self.write(json_encode([]))
+        heat_map = []
+        query = ('SELECT id, {emotion} FROM beta_rows'
+                 ' WHERE time > ADDTIME(NOW(), \'-{select_timespan}\')'
+                 .format(emotion=self.__class__.emotion, select_timespan=SELECT_TIMESPAN))
+        for r in Database.get_connection().query(query):
+            heat = {
+                'id': int(r['id']),
+                'heat': int(r.get(self.__class__.emotion))
+            }
+            heat_map.append(heat)
+        self.write(json_encode(heat_map))
 
 
-class DeterminationMapHandler(RequestHandler):
+class AngerMapHandler(EmotionalMapHandler):
 
-    def get(self):
-        self.write(json_encode([]))
-
-
-class FearMapHandler(RequestHandler):
-
-    def get(self):
-        self.write(json_encode([]))
+    emotion = 'anger'
 
 
-class JoyMapHandler(RequestHandler):
+class DeterminationMapHandler(EmotionalMapHandler):
 
-    def get(self):
-        self.write(json_encode([]))
+    emotion = 'determination'
+
+
+class FearMapHandler(EmotionalMapHandler):
+
+    emotion = 'fear'
+
+
+class JoyMapHandler(EmotionalMapHandler):
+
+    emotion = 'joy'
