@@ -14,3 +14,6 @@ DB_USER = 'root'
 # Map search settings
 SELECT_RADIUS = 0.00015  # ~15 meters.
 SELECT_TIMESPAN = '04:00:00'  # Last 4 hours.
+
+# Application buses.
+REALTIME_BUS_ADDR = 'tcp://127.0.0.1:5555'
