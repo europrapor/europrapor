@@ -8,14 +8,14 @@ $select_timespan = '04:00:00';
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (preg_match('/^\/map\/(\w+)$/', $_SERVER['SCRIPT_NAME'], $matches) && in_array($matches[1], $maps)) {
         include('mysql_pdo_conn.php');
-        $sql = 'SELECT id, privacy, joy, fear, determination, anger FROM beta_rows WHERE time > ADDTIME(NOW(), \'-'.$select_timespan.'\')';
+        $sql = 'SELECT id, '.$matches[1].' FROM beta_rows WHERE time > ADDTIME(NOW(), \'-'.$select_timespan.'\')';
         $rows = $conn->query($sql);
 
         $response = array();
-        while ($row = $rows -> fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $rows -> fetch(PDO::FETCH_NUM)) {
             $heat = [
-                'id' => intval($row['id']),
-                'heat' => intval($row[$matches[1]])
+                'id' => intval($row[0]),
+                'heat' => intval($row[1])
             ];
 
             array_push($response, $heat);
