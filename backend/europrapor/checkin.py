@@ -18,5 +18,4 @@ class CheckinHandler(RequestHandler):
                          fear=str(mental_state['fear']),
                          determination=str(mental_state['determination']),
                          anger=str(mental_state['anger'])))
-        print(query)
         Database.get_connection().execute(query)
