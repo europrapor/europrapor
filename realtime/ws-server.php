@@ -6,6 +6,8 @@
 
     require dirname(__FILE__) . '/vendor/autoload.php';
 
+    include dirname(__FILE__) . '/config.php';
+
     $realtime = new RealTime();
 
     $loop   = React\EventLoop\Factory::create();
@@ -15,7 +17,7 @@
     $pull->on('message', array($realtime , 'onCheckIn'));
 
     $webSock = new React\Socket\Server($loop);
-    $webSock->listen(666, '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
+    $webSock->listen($ws_port, '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
     $webServer = new Ratchet\Server\IoServer(
         new Ratchet\Http\HttpServer(
             new Ratchet\WebSocket\WsServer(
