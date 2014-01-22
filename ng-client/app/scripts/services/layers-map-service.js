@@ -5,7 +5,7 @@
 angular.module('ngEuroPraporApp')
   .factory('LayersMap', function ($resource, $timeout, DensityMap) {
     var layersData = {},
-        RESOURCE_URL = 'http://devel.api.maidanpower.org/map/',
+	RESOURCE_URL = 'http://api.maidanpower.org/map/',
         getData, convertData;
 
     // get and map emotion map data to density data

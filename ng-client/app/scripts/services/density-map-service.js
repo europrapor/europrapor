@@ -6,7 +6,7 @@ angular.module('ngEuroPraporApp')
   .factory('DensityMap', function ($resource, $timeout) {
     var densityData = null,
         OLReadyData = null,
-        dataSource = $resource('http://devel.api.maidanpower.org/map'),
+	dataSource = $resource('http://api.maidanpower.org/map'),
         getData, convertData;
 
     // get raw data from server
