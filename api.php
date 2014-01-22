@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             $response = array($checkin);
             $context = new ZMQContext();
-            $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my realtime');
+            $socket = $context->getSocket(ZMQ::SOCKET_PUSH, $zmq_presistent_id);
             $socket->connect($zmq_bind);
 
             $socket->send(json_encode($response));
