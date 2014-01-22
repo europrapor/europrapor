@@ -104,10 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 ]
             ];
 
+            include dirname(__FILE__) . '/realtime/config.php';
+
             $response = array($checkin);
             $context = new ZMQContext();
             $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'my realtime');
-            $socket->connect("tcp://localhost:5555");
+            $socket->connect($zmq_bind);
 
             $socket->send(json_encode($response));
         }
