@@ -63,7 +63,6 @@ nav {
     color: $ui-white;
 
     &:hover {
-      color: $ui-hover;
       text-decoration: none;
     }
   }
@@ -172,10 +171,6 @@ nav {
   font-weight: bold;
   line-height: $check-in-size;
   cursor: pointer;
-
-  &:hover {
-    color: $ui-hover;
-  }
 }
 
 /* Overlay loader */
@@ -288,9 +283,6 @@ nav {
       cursor: pointer;
       text-transform: capitalize;
 
-      &:hover {
-        color: $ui-hover;
-      }
       &.inactive {
         color: $ui-inactive;
       }
