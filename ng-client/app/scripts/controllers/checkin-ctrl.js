@@ -109,7 +109,13 @@ angular.module('ngEuroPraporApp')
   })
   .directive('ngSlider', function() {
     var rangeSlider = function ($scope, $element, $attrs) {
-      new SliderControl($element[0], 0, 10, {
+      var range = [0, 10];
+
+      if ($attrs.id == 'privacy') {
+	range = [10, 0];
+      }
+
+      new SliderControl($element[0], range[0], range[1], {
         label: $attrs.label.toUpperCase(),
         initialValue: $scope.sliders[$attrs.id].value,
         onslide: function() {
