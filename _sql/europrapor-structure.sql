@@ -6,8 +6,8 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `europrapor` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `europrapor`;
 
--- Table structure for table `beta_rows`
-CREATE TABLE IF NOT EXISTS `beta_rows` (
+-- Table structure for table `checkins`
+CREATE TABLE IF NOT EXISTS `checkins` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lt` decimal(8,5) NOT NULL,

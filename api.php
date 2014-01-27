@@ -8,7 +8,7 @@ $select_timespan = '04:00:00';
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (preg_match('/^\/map\/(\w+)$/', $_SERVER['SCRIPT_NAME'], $matches) && in_array($matches[1], $maps)) {
         include('mysql_pdo_conn.php');
-        $sql = 'SELECT id, '.$matches[1].' FROM beta_rows WHERE time > ADDTIME(NOW(), \'-'.$select_timespan.'\')';
+        $sql = 'SELECT id, '.$matches[1].' FROM checkins WHERE time > ADDTIME(NOW(), \'-'.$select_timespan.'\')';
         $rows = $conn->query($sql);
 
         $response = array();
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             include('mysql_pdo_conn.php');
             // 0.00015 ~ 15 meters
             $sql = 'SELECT r1.id, r1.lt, r1.lg, r1.privacy
-                FROM beta_rows AS r1, beta_rows AS r2
+                FROM checkins AS r1, checkins AS r2
                 WHERE r1.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
                 AND r2.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
                 AND r1.lt <= (r2.lt + 0.00015)
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $mental_state = $checkin['mental_state'];
     include('mysql_pdo_conn.php');
 
-    $sql = 'INSERT INTO beta_rows (lt, lg, privacy, joy, fear, determination, anger) '.
+    $sql = 'INSERT INTO checkins (lt, lg, privacy, joy, fear, determination, anger) '.
         'VALUES ('.strval($checkin['position']['lt']).
         ','.strval($checkin['position']['lg']).
         ','.strval($checkin['privacy']).
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $lastId = $conn->lastInsertId();
 
         $sql = 'SELECT r1.id, r1.lt, r1.lg, r1.privacy
-                FROM beta_rows AS r1, beta_rows AS r2
+                FROM checkins AS r1, checkins AS r2
                 WHERE r1.id = '.$lastId.'
                 AND r2.time > ADDTIME(NOW(), \'-'.$select_timespan.'\')
                 AND r1.lt <= (r2.lt + 0.00015)
