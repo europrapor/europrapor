@@ -1,0 +1,11 @@
+{
+  "name": "europrapor-rest-server",
+  "version": "0.0.1",
+  "dependencies": {
+    "restify": "~2.7.0",
+    "mongojs": "~0.11.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
